@@ -31,6 +31,7 @@ appname: demo
 servers:
   -
     name: gitlab-server
+    ssh_user: root
     platform: centos7
     storage:
       -
