@@ -1,4 +1,3 @@
-# gitlab
+# Gitlab-CE Demo Cookbook
 
-TODO: Enter the cookbook description here.
-
+Deploys Gitlab-CE 10

@@ -13,7 +13,7 @@ Rubocop:
 Foodcritic:
   stage: Test
   script:
-    - foodcritic site_cookbooks/*
+    - foodcritic site_cookbooks/
 
 Berks:
   stage: Test
