@@ -27,8 +27,8 @@ Berks:
 Old_Berks:
   stage: Test
   script:
-    - apt update
-    - apt install git -y
+    - apt -qq update
+    - apt -qq install git -y
     - berks install
     - berks verify
     - berks outdated
