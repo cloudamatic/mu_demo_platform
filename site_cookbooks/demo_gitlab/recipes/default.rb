@@ -38,7 +38,6 @@ ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
 ENV['GITLAB_ROOT_PASSWORD'] = root_pwd
 ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
 
-
 include_recipe 'omnibus-gitlab::default'
 
 # Notify Users of GITLAB instalation
@@ -48,4 +47,23 @@ ruby_block 'gitlabNotify' do
         puts "# Your Gitlab Server is running at #{node['omnibus-gitlab']['gitlab_rb']['external_url']}"
         puts "########################################################################################################\n\n"
     end
+end
+
+firewall 'default' do
+    action :install
+end
+
+firewall_rule 'http' do
+    port     80
+    command  :allow
+end
+
+firewall_rule 'https' do
+    port     443
+    command  :allow
+end
+
+firewall_rule 'something' do
+    port     8080
+    command  :allow
 end
