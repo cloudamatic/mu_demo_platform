@@ -1,7 +1,8 @@
 ---
 appname: demo
 loadbalancers:
-- name: gitlab
+- name: gitlab-lb
+  classic: true
   vpc:
     vpc_id: vpc-4820b030
     subnet_pref: all_public
