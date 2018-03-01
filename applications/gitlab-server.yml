@@ -31,8 +31,7 @@ appname: demo
 servers:
   -
     name: gitlab-server
-    ssh_user: root
-    platform: centos7
+    platform: ubuntu
     storage:
       -
         size: 30
