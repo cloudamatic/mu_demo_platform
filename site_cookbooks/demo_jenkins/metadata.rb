@@ -1,4 +1,4 @@
-name 'jenkins'
+name 'demo_jenkins'
 maintainer 'eGlobalTech'
 maintainer_email 'eGTLabs@eglobaltech.com'
 license 'MIT'

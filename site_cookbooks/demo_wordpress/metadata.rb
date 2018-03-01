@@ -1,4 +1,4 @@
-name 'wordpress'
+name 'demo_wordpress'
 maintainer 'eGlobalTech'
 maintainer_email 'eGTLabs@eglobaltech.com'
 license 'MIT'

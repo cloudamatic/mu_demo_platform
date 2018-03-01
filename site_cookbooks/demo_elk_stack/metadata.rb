@@ -1,4 +1,4 @@
-name 'ELK_Stack'
+name 'demo_elk_stack'
 maintainer 'eGlobalTech'
 maintainer_email 'eGTLabs@eglobaltech.com'
 license 'MIT'
