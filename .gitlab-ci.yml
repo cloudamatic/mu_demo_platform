@@ -23,6 +23,15 @@ Berks:
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks install); done
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks verify); done
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks outdated); done
+  
+Old_Berks:
+  stage: Test
+  script:
+    - apt update
+    - apt install git -y
+    - berks install
+    - berks verify
+    - berks outdated
 
 ChefSpec:
   stage: Test
