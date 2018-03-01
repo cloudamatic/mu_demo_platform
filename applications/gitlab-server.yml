@@ -43,7 +43,7 @@ servers:
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
       vpc_id: vpc-4820b030
-      subnet_pref: privite
+      subnet_pref: all_privite
     ingress_rules:
       -
         port: 80
