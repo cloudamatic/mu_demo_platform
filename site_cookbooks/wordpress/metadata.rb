@@ -1,9 +1,9 @@
-name 'gitlab'
+name 'wordpress'
 maintainer 'eGlobalTech'
 maintainer_email 'eGTLabs@eglobaltech.com'
 license 'MIT'
-description 'Installs/Configures GitLab CD'
-long_description 'Installs/Configures GitLab CD'
+description 'Installs/Configures wordpress'
+long_description 'Installs/Configures wordpress'
 version '0.1.0'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 supports 'ubuntu'
