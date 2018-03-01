@@ -1,0 +1,40 @@
+<%
+$azs = MU::Cloud::AWS.listAZs
+$azs.delete $azskip if $azskip
+current_vpc = MU.myVPC
+%>
+---
+appname: demo
+servers:
+  -
+    name: gitlab
+    platform: centos
+    storage:
+      -
+        size: 15
+    skipinitialupdates: true
+    size: t2.medium
+    run_list:
+    - recipe[gitlab]
+    - recipe[gitlab::gitlab_runner]
+    vpc:
+    <% if $vpc_deploy_id %>
+      deploy_id: <%= $vpc_deploy_id %>
+    <% elsif $use_current %>
+      vpc_id: <%= current_vpc %>
+    <% else %>
+      vpc_name: vpc
+    <% end %>
+    ingress_rules:
+      -
+        port: 80
+        hosts:
+          - "0.0.0.0/0"
+      -
+        port: 443
+        hosts:
+          - "0.0.0.0/0"
+      - 
+        port: 8080
+        hosts:
+          - "0.0.0.0/0"
