@@ -5,7 +5,7 @@ loadbalancers:
   classic: true
   vpc:
     vpc_id: vpc-4820b030
-    subnet_pref: all_public
+    subnet_pref: public
   healthcheck:
     target: HTTP:80/users/sign_in
     timeout: 2
