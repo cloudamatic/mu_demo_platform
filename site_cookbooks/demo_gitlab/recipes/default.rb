@@ -40,26 +40,25 @@ ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
 
 include_recipe 'omnibus-gitlab::default'
 
-firewall_rule 'http' do
-    port     80
-    command  :allow
-end
-
-firewall_rule 'https' do
-    port     443
-    command  :allow
-end
-
-firewall_rule 'Unicorn' do
-    port     8080
-    command  :allow
-end
-
 # Notify Users of GITLAB instalation
 ruby_block 'gitlabNotify' do
+    action :nothing
     block do
         puts "\n######################################## End of Run Information ########################################"
         puts "# Your Gitlab Server is running at #{node['omnibus-gitlab']['gitlab_rb']['external_url']}"
         puts "########################################################################################################\n\n"
     end
 end
+
+firewall 'default' do
+    action :nothing
+end
+
+firewall_rule 'Open Gitlab Ports' do
+    port     [80, 443, 8080]
+    command  :allow
+    notifies :restart, 'firewall[default]', :immediately
+    notifies :run, 'ruby_block[gitlabNotify]', :immediately
+end
+
+
