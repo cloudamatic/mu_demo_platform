@@ -49,10 +49,6 @@ ruby_block 'gitlabNotify' do
     end
 end
 
-firewall 'default' do
-    action :install
-end
-
 firewall_rule 'http' do
     port     80
     command  :allow
