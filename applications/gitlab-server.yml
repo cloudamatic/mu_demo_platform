@@ -1,40 +1,60 @@
-<%
-$azs = MU::Cloud::AWS.listAZs
-$azs.delete $azskip if $azskip
-current_vpc = MU.myVPC
-%>
 ---
 appname: demo
+loadbalancers:
+- name: gitlab
+  vpc:
+    vpc_id: vpc-4820b030
+    subnet_pref: all_public
+  healthcheck:
+    target: HTTP:80/users/sign_in
+    timeout: 2
+    interval: 5
+    unhealthy-threshold: 2
+    healthy-threshold: 2
+  listeners:
+  - lb-port: 22
+    lb-protocol: TCP
+    instance-port: 22
+    instance-protocol: TCP
+  - lb-port: 443
+    lb-protocol: HTTPS
+    instance-port: 80
+    instance-protocol: HTTP
+    ssl-certificate-name: "*.egt-labs.com"
+  ingress_rules:
+  - port: 443
+    hosts:
+    - 0.0.0.0/0
+  - port: 22
+    hosts:
+    - 0.0.0.0/0
 servers:
   -
-    name: gitlab
-    platform: centos
+    name: gitlab-server
+    platform: centos7
     storage:
       -
-        size: 15
-    skipinitialupdates: true
+        size: 30
+    loadbalancers:
+    - concurrent-load-balancer: gitlab
     size: t2.medium
     run_list:
-    - recipe[gitlab]
-    - recipe[gitlab::gitlab_runner]
+    - recipe[demo_gitlab]
+    - recipe[demo_gitlab::gitlab_runner]
     vpc:
-    <% if $vpc_deploy_id %>
-      deploy_id: <%= $vpc_deploy_id %>
-    <% elsif $use_current %>
-      vpc_id: <%= current_vpc %>
-    <% else %>
-      vpc_name: vpc
-    <% end %>
+      vpc_id: vpc-4820b030
+      subnet_pref: privite
     ingress_rules:
       -
         port: 80
-        hosts:
+        hosts:          
           - "0.0.0.0/0"
       -
         port: 443
         hosts:
           - "0.0.0.0/0"
-      - 
-        port: 8080
+      -
+        port: 22
         hosts:
           - "0.0.0.0/0"
+                                                                         
