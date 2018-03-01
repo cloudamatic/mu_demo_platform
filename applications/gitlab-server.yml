@@ -38,7 +38,7 @@ servers:
         size: 30
     skipinitialupdates: true
     loadbalancers:
-    - concurrent-load-balancer: gitlab
+    - concurrent-load-balancer: gitlab-lb
     size: t2.medium
     run_list:
     - recipe[demo_gitlab]
