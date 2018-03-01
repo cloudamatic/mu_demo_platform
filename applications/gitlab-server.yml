@@ -1,33 +1,33 @@
 ---
 appname: demo
-# loadbalancers:
-# - name: gitlab
-#   vpc:
-#     vpc_id: vpc-4820b030
-#     subnet_pref: all_public
-#   healthcheck:
-#     target: HTTP:80/users/sign_in
-#     timeout: 2
-#     interval: 5
-#     unhealthy-threshold: 2
-#     healthy-threshold: 2
-#   listeners:
-#   - lb-port: 22
-#     lb-protocol: TCP
-#     instance-port: 22
-#     instance-protocol: TCP
-#   - lb-port: 443
-#     lb-protocol: HTTPS
-#     instance-port: 80
-#     instance-protocol: HTTP
-#     ssl-certificate-name: "*.egt-labs.com"
-#   ingress_rules:
-#   - port: 443
-#     hosts:
-#     - 0.0.0.0/0
-#   - port: 22
-#     hosts:
-#     - 0.0.0.0/0
+loadbalancers:
+- name: gitlab
+  vpc:
+    vpc_id: vpc-4820b030
+    subnet_pref: all_public
+  healthcheck:
+    target: HTTP:80/users/sign_in
+    timeout: 2
+    interval: 5
+    unhealthy-threshold: 2
+    healthy-threshold: 2
+  listeners:
+  - lb-port: 22
+    lb-protocol: TCP
+    instance-port: 22
+    instance-protocol: TCP
+  - lb-port: 443
+    lb-protocol: HTTPS
+    instance-port: 80
+    instance-protocol: HTTP
+    ssl-certificate-name: "*.egt-labs.com"
+  ingress_rules:
+  - port: 443
+    hosts:
+    - 0.0.0.0/0
+  - port: 22
+    hosts:
+    - 0.0.0.0/0
 servers:
   -
     name: gitlab-server
@@ -36,22 +36,18 @@ servers:
       -
         size: 30
     skipinitialupdates: true
-    # loadbalancers:
-    # - concurrent-load-balancer: gitlab
+    loadbalancers:
+    - concurrent-load-balancer: gitlab
     size: t2.medium
     run_list:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
       vpc_id: vpc-4820b030
-      subnet_pref: public
+      subnet_pref: all_private
     ingress_rules:
       -
         port: 80
         hosts:          
-          - "0.0.0.0/0"
-      -
-        port: 443
-        hosts:
           - "0.0.0.0/0"
                                                                          

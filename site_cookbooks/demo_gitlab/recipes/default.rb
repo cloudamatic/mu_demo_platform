@@ -24,6 +24,12 @@ include_recipe 'chef-vault'
 node.override['gitlab']['is_server'] = true
 node.override['gitlab']['endpoint'] = 'http://'+node['ec2']['public_dns_name']+'/'
 
+node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
+node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
+node.override['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
+    "X-Forwarded-Proto" => "https",
+    "X-Forwarded-Ssl" => "on"
+  }
 
 # GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
 runner_token = SecureRandom.urlsafe_base64
