@@ -1,0 +1,17 @@
+image: chef/chefdk:latest
+
+stages:
+  - Lint
+  - Test
+  - Merge
+  - Deploy
+  
+Rubocop:
+  stage: Lint
+  script:
+    - rubocop ./
+  
+Foodcritic:
+  stage: Lint
+  script:
+    - foodcritic site_cookbooks/*  --tags ~FC078
