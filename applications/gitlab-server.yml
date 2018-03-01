@@ -35,6 +35,7 @@ servers:
     storage:
       -
         size: 30
+    skipinitialupdates: true
     # loadbalancers:
     # - concurrent-load-balancer: gitlab
     size: t2.medium
