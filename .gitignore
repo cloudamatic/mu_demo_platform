@@ -25,3 +25,23 @@ Policyfile.lock.json
 .*.swp
 nohup.out
 .vscode
+
+# SiteCookbooks .gitignore
+site_cookbooks/*/.git
+site_cookbooks/*/.gitignore
+site_cookbooks/*/.vagrant
+site_cookbooks/*/*~
+site_cookbooks/*/*#
+site_cookbooks/*/.#*
+site_cookbooks/*/\#*#
+site_cookbooks/*/.*.sw[a-z]
+site_cookbooks/*/*.un~
+site_cookbooks/*/Gemfile.lock
+site_cookbooks/*/gems.locked
+site_cookbooks/*/bin/*
+site_cookbooks/*/.bundle/*
+site_cookbooks/*/.kitchen/
+site_cookbooks/*/.kitchen.local.yml
+site_cookbooks/*/Berksfile.lock
+site_cookbooks/*/.zero-knife.rb
+site_cookbooks/*/Policyfile.lock.json

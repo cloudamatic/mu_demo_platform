@@ -19,7 +19,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[demo::default]
+      - recipe[gitlab::default]
     verifier:
       inspec_tests:
         - test/smoke/default
