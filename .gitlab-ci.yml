@@ -1,17 +1,31 @@
 image: chef/chefdk:latest
 
 stages:
-  - Lint
   - Test
   - Merge
   - Deploy
   
 Rubocop:
-  stage: Lint
+  stage: Test
   script:
     - rubocop ./
   
 Foodcritic:
-  stage: Lint
+  stage: Test
   script:
     - foodcritic site_cookbooks/*  --tags ~FC078
+
+Berks:
+  stage: Test
+  script:
+    - apt update
+    - apt install git -y
+    - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks install); done
+    - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks verify); done
+    - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks outdated); done
+
+ChefSpec:
+  stage: Test
+  script:
+    - for d in ./site_cookbooks/*/ ; do (cd "$d" && chef exec rspec); done
+  allow_failure: true
