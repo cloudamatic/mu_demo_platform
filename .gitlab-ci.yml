@@ -18,8 +18,8 @@ Foodcritic:
 Berks:
   stage: Test
   script:
-    - apt update
-    - apt install git -y
+    - apt-get -qq update
+    - apt-get -qq install git -y
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks install); done
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks verify); done
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && berks outdated); done
@@ -27,8 +27,8 @@ Berks:
 Old_Berks:
   stage: Test
   script:
-    - apt -qq update
-    - apt -qq install git -y
+    - apt-get -qq update
+    - apt-get -qq install git -y
     - berks install
     - berks verify
     - berks outdated
