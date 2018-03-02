@@ -29,28 +29,28 @@ loadbalancers:
 #   - port: 22
 #     hosts:
 #     - 0.0.0.0/0
-loadbalancers:
-- name: gitlab-lb
-  vpc:
-    vpc_id: vpc-040da43493f894a8d
-    subnets:
-    - subnet_name: ryan_public0
-    - subnet_name: ryan_public2
-  ingress_rules:
-  - port: 443
-    hosts:
-    - 0.0.0.0/0
-  healthcheck:
-    target: HTTP:80/users/sign_in
-    timeout: 2
-    interval: 5
-    unhealthy-threshold: 2
-    healthy-threshold: 2
-  listeners:
-  - lb-port: 443
-    lb-protocol: HTTPS
-    instance-port: 80
-    instance-protocol: HTTPS
+# loadbalancers:
+# - name: gitlab-lb
+#   vpc:
+#     vpc_id: vpc-040da43493f894a8d
+#     subnets:
+#     - subnet_name: ryan_public0
+#     - subnet_name: ryan_public2
+#   ingress_rules:
+#   - port: 443
+#     hosts:
+#     - 0.0.0.0/0
+#   healthcheck:
+#     target: HTTP:80/users/sign_in
+#     timeout: 2
+#     interval: 5
+#     unhealthy-threshold: 2
+#     healthy-threshold: 2
+#   listeners:
+#   - lb-port: 443
+#     lb-protocol: HTTPS
+#     instance-port: 80
+#     instance-protocol: HTTPS
 servers:
   -
     name: gitlab-server
@@ -67,6 +67,7 @@ servers:
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
       vpc_id: vpc-040da43493f894a8d
+      subnet_pref: private
     ingress_rules:
       -
         port: 80
