@@ -33,6 +33,9 @@ loadbalancers:
 - name: gitlab-lb
   vpc:
     vpc_id: vpc-040da43493f894a8d
+    subnets:
+    - subnet_name: ryan_public0
+    - subnet_name: ryan_public2
   ingress_rules:
   - port: 443
     hosts:
