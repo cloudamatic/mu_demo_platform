@@ -63,9 +63,7 @@ servers:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
-      vpc_id: vpc-040da43493f894a8d
-      subnets:
-      - subnet_name: ryan_private
+      vpc_name: RyanVPC
     ingress_rules:
       -
         port: 80
