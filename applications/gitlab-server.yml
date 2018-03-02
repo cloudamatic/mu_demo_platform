@@ -1,11 +1,42 @@
 ---
 appname: demo
 loadbalancers:
+# - name: gitlab-lb
+#   classic: true
+#   vpc:
+#     subnets:
+#     - subnet_name: ryan_public
+#   healthcheck:
+#     target: HTTP:80/users/sign_in
+#     timeout: 2
+#     interval: 5
+#     unhealthy-threshold: 2
+#     healthy-threshold: 2
+#   listeners:
+#   - lb-port: 22
+#     lb-protocol: TCP
+#     instance-port: 22
+#     instance-protocol: TCP
+#   - lb-port: 443
+#     lb-protocol: HTTPS
+#     instance-port: 80
+#     instance-protocol: HTTP
+#     ssl-certificate-name: "*.egt-labs.com"
+#   ingress_rules:
+#   - port: 443
+#     hosts:
+#     - 0.0.0.0/0
+#   - port: 22
+#     hosts:
+#     - 0.0.0.0/0
+loadbalancers:
 - name: gitlab-lb
-  classic: true
   vpc:
-    subnets:
-    - subnet_name: ryan_public
+    vpc_name: RyanVPC
+  ingress_rules:
+  - port: 443
+    hosts:
+    - 0.0.0.0/0
   healthcheck:
     target: HTTP:80/users/sign_in
     timeout: 2
@@ -13,22 +44,10 @@ loadbalancers:
     unhealthy-threshold: 2
     healthy-threshold: 2
   listeners:
-  - lb-port: 22
-    lb-protocol: TCP
-    instance-port: 22
-    instance-protocol: TCP
   - lb-port: 443
     lb-protocol: HTTPS
     instance-port: 80
-    instance-protocol: HTTP
-    ssl-certificate-name: "*.egt-labs.com"
-  ingress_rules:
-  - port: 443
-    hosts:
-    - 0.0.0.0/0
-  - port: 22
-    hosts:
-    - 0.0.0.0/0
+    instance-protocol: HTTPS
 servers:
   -
     name: gitlab-server
