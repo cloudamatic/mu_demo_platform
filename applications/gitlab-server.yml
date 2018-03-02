@@ -4,8 +4,9 @@ loadbalancers:
 - name: gitlab-lb
   classic: true
   vpc:
+    vpc_id: vpc-040da43493f894a8d
     subnets:
-    - subnet_id: subnet-095f859ea9a97bf15
+    - subnet_name: ryan_public
   healthcheck:
     target: HTTP:80/users/sign_in
     timeout: 2
@@ -44,8 +45,9 @@ servers:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
+      vpc_id: vpc-040da43493f894a8d
       subnets:
-      - subnet_id: subnet-02e31e107de67ce8f
+      - subnet_name: ryan_private
     ingress_rules:
       -
         port: 80
