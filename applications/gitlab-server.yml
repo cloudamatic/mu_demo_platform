@@ -44,10 +44,15 @@ loadbalancers:
     unhealthy-threshold: 2
     healthy-threshold: 2
   listeners:
+  # - lb-port: 22
+  #   lb-protocol: TCP
+  #   instance-port: 22
+  #   instance-protocol: TCP
   - lb-port: 443
     lb-protocol: HTTPS
     instance-port: 80
-    instance-protocol: HTTPS
+    instance-protocol: HTTP
+    ssl-certificate-name: "*.egt-labs.com"
 servers:
   -
     name: gitlab-server
