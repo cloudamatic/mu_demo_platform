@@ -4,8 +4,9 @@ loadbalancers:
 - name: gitlab-lb
   classic: true
   vpc:
-    vpc_id: vpc-4820b030
-    subnet_pref: public
+    vpc_id: vpc-040da43493f894a8d
+    subnets:
+    - subnet_id: subnet-095f859ea9a97bf15
   healthcheck:
     target: HTTP:80/users/sign_in
     timeout: 2
@@ -39,13 +40,13 @@ servers:
     skipinitialupdates: true
     loadbalancers:
     - concurrent-load-balancer: gitlab-lb
-    size: t2.medium
+    size: t2.large
     run_list:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
-    vpc:
-      vpc_id: vpc-4820b030
-      subnet_pref: all_private
+    vpc_id: vpc-040da43493f894a8d
+    subnets:
+    - subnet_id: subnet-02e31e107de67ce8f
     ingress_rules:
       -
         port: 80
