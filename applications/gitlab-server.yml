@@ -31,10 +31,14 @@ loadbalancers:
 #     - 0.0.0.0/0
 loadbalancers:
 - name: gitlab-lb
+  classic: true
   vpc:
-    vpc_id: vpc-0e5a068d03d632b0f
+    vpc_id: vpc-4820b030
   ingress_rules:
   - port: 443
+    hosts:
+    - 0.0.0.0/0
+  - port: 22
     hosts:
     - 0.0.0.0/0
   healthcheck:
@@ -44,10 +48,10 @@ loadbalancers:
     unhealthy-threshold: 2
     healthy-threshold: 2
   listeners:
-  # - lb-port: 22
-  #   lb-protocol: TCP
-  #   instance-port: 22
-  #   instance-protocol: TCP
+  - lb-port: 22
+    lb-protocol: TCP
+    instance-port: 22
+    instance-protocol: TCP
   - lb-port: 443
     lb-protocol: HTTPS
     instance-port: 80
@@ -68,7 +72,7 @@ servers:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
-      vpc_id: vpc-0e5a068d03d632b0f
+      vpc_id: vpc-4820b030
       subnet_pref: private
     ingress_rules:
       -
