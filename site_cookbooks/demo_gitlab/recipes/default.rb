@@ -22,7 +22,7 @@ include_recipe 'chef-vault'
 
 # Set an attribute to identify the node as a GitLab Server
 node.override['gitlab']['is_server'] = true
-node.override['gitlab']['endpoint'] = 'http://'+node['ec2']['public_dns_name']+'/'
+node.override['gitlab']['endpoint'] = 'http://'+node['ec2']['private_dns_name']+'/'
 
 node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
 node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
