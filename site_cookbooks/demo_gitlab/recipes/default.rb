@@ -20,9 +20,29 @@ require 'securerandom'
 include_recipe 'chef-vault'
 #DO CONFIG HERE
 
+
+
+
+gitlab_server = ''
+gitlab_token = ''
+gitlab_root_pwd = ''
+
+gitlabServers = search(:node, "gitlab_is_server:true") do |node|
+    gitlab_server = node['gitlab']['endpoint']
+    gitlab_token = node['gitlab']['runnerToken']
+end
+
+if gitlab_server.empty
+    # GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
+    gitlab_server = 'http://localhost/'
+    gitlab_token = SecureRandom.urlsafe_base64
+    gitlab_root_pwd = 'superman'
+end
+
 # Set an attribute to identify the node as a GitLab Server
 node.override['gitlab']['is_server'] = true
-node.override['gitlab']['endpoint'] = 'http://'+'localhost'+'/'
+node.override['gitlab']['endpoint'] = gitlab_server
+node.override['gitlab']['runner_endpoint'] = gitlab_server
 
 node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
 node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
@@ -31,18 +51,13 @@ node.override['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
     "X-Forwarded-Ssl" => "on"
   }
 
-# GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
-runner_token = SecureRandom.urlsafe_base64
-root_pwd = 'superman'
-# TODO: SAVE THEM TO A VAULT FOR FUTURE ACCESS
-
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
-node.override['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
+node.override['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
-ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
-ENV['GITLAB_ROOT_PASSWORD'] = root_pwd
-ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
+ENV['GITLAB_ENDPOINT'] = gitlab_server
+ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
+ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = gitlab_token
 
 include_recipe 'omnibus-gitlab::default'
 
