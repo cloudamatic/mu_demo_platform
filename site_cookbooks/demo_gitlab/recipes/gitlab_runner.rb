@@ -53,7 +53,7 @@ end
 		end
 	end
 
-	if !gitlabToken.nil or !gitlabServer.nil
+	if !gitlabToken.nil? or !gitlabServer.nil?
 
 		puts "******************************************************"
 		puts gitlabServer
