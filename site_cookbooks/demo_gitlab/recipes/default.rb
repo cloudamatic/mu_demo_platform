@@ -27,7 +27,7 @@ gitlab_server = ''
 gitlab_token = ''
 gitlab_root_pwd = ''
 
-gitlabServers = search(:node, "gitlab_is_server:true") do |node|
+search(:node, "gitlab_is_server:true").each do |node|
     gitlab_server = node['gitlab']['endpoint']
     gitlab_token = node['gitlab']['runnerToken']
 end
@@ -66,7 +66,7 @@ ruby_block 'gitlabNotify' do
     action :nothing
     block do
         puts "\n######################################## End of Run Information ########################################"
-        puts "# Your Gitlab Server is running at #{node['omnibus-gitlab']['gitlab_rb']['external_url']}"
+        puts "# Your Gitlab Server is running at #{node['omnibus-gitlab']['gitlab_rb']['external_url']} the gitlab token is #{gitlab_token}"
         puts "########################################################################################################\n\n"
     end
 end
