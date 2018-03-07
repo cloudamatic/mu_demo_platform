@@ -40,29 +40,29 @@ end
 	
 	# SEARCH FOR THE GITLAB SERVER
 	
-	gitlabServer = ''
-	gitlabToken = ''
+	gitlab_server = ''
+	gitlab_token = ''
 	
 	if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-		gitlabServer = ENV['GITLAB_ENDPOINT']
-		gitlabToken = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+		gitlab_server = ENV['GITLAB_ENDPOINT']
+		gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
 	else
-		gitlabServers = search(:node, "gitlab_is_server:true") do |node|
-			gitlabServer = node['gitlab']['endpoint']
-			gitlabToken = node['gitlab']['runnerToken']
+		gitlab_servers = search(:node, "gitlab_is_server:true") do |node|
+			gitlab_server = node['gitlab']['endpoint']
+			gitlab_token = node['gitlab']['runnerToken']
 		end
 	end
 
-	if !gitlabToken.nil? or !gitlabServer.nil?
+	if !gitlab_token.nil? or !gitlab_server.nil?
 
 		puts "******************************************************"
-		puts gitlabServer
-		puts gitlabToken
+		puts gitlab_server
+		puts gitlab_token
 		puts "******************************************************"
 		
 		
 		execute 'Register Runner' do
-			command "gitlab-runner register -n -u '#{ENV['GITLAB_ENDPOINT']}' -r '#{ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']}' --executor docker --docker-image ubuntu --locked false --tag-list '#{node['ec2']['public_dns_name']}, #{node['platform_family']}, docker'"
+			command "gitlab-runner register -n -u '#{gitlab_server}' -r '#{gitlab_token}' --executor docker --docker-image ubuntu --locked false --tag-list '#{node['ec2']['public_dns_name']}, #{node['platform_family']}, docker'"
 			notifies :restart, 'service[gitlab-runner]', :delayed
 			ignore_failure true
 		end
