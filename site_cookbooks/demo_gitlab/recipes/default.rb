@@ -32,7 +32,7 @@ gitlabServers = search(:node, "gitlab_is_server:true") do |node|
     gitlab_token = node['gitlab']['runnerToken']
 end
 
-if gitlab_server.empty
+if gitlab_server.empty?
     # GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
     gitlab_server = 'http://localhost/'
     gitlab_token = SecureRandom.urlsafe_base64
