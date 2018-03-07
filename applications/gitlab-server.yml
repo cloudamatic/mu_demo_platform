@@ -1,5 +1,9 @@
 ---
 appname: demo
+parameters:
+- name: ami
+  required: false
+  default: 'ami-02e98f78'
 loadbalancers:
 - name: gitlab-lb
   classic: true
@@ -28,26 +32,41 @@ loadbalancers:
     instance-port: 80
     instance-protocol: HTTP
     ssl-certificate-name: "*.egt-labs.com"
-servers:
-  -
-    name: gitlab-server
-    platform: centos7
-    storage:
-      -
-        size: 30
+
+server_pools:
+  - name: gitlab_asg
+    min-size: 1
+    max-size: 1
     skipinitialupdates: true
     loadbalancers:
-    - concurrent-load-balancer: gitlab-lb
-    size: t2.large
+    - concurrent-load-balancer: 'gitlab-lb'
+    vpc:
+      subnet_pref: private
+      vpc_id: vpc-4820b030
+    ingress_rules:
+      - 
+        port: 80
+        hosts: 
+          - "0.0.0.0/0"
     run_list:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
-    vpc:
-      vpc_id: vpc-4820b030
-      subnet_pref: private
-    ingress_rules:
-      -
-        port: 80
-        hosts:          
-          - "0.0.0.0/0"
-                                                                         
+    dependencies:
+    - name: 'gitlab-lb'
+      type: 'loadbalancer'
+
+    basis:
+      launch-config:
+        name: 'gitlab_launc_config'
+        size: t2.large
+        ami-id: <%= ami %>
+        iam-policies:
+        - GitlabEc2GodMode:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+                - "*"
+              Resource:
+                - "*"
+
