@@ -29,9 +29,9 @@ firewall_rule 'Open Gitlab Ports' do
     notifies :restart, 'firewall[default]', :immediately
 end
 
-gitlab_server = 'http://localhost/'
-gitlab_token = '9nvwe38cm2cm8m'
-gitlab_root_pwd = 'superman'
+gitlab_server = ''
+gitlab_token = ''
+gitlab_root_pwd = ''
 
 search(:node, "gitlab_is_server:true").each do |node|
     gitlab_server = node['gitlab']['endpoint']
@@ -43,14 +43,14 @@ if gitlab_server.empty?
     # GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
     puts "No GITLAB SERVER FOUND... GENERATING A TOKEN"
     gitlab_server = 'http://localhost/'
-    gitlab_token = SecureRandom.urlsafe_base64
+    gitlab_token = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
     gitlab_root_pwd = 'superman'
 end
 
 # Set an attribute to identify the node as a GitLab Server
 node.override['gitlab']['is_server'] = true
 node.override['gitlab']['endpoint'] = gitlab_server
-node.override['gitlab']['runner_endpoint'] = gitlab_server
+node.override['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
 
 node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
 node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
