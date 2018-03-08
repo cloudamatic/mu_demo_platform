@@ -18,10 +18,16 @@
 
 require 'securerandom'
 include_recipe 'chef-vault'
-#DO CONFIG HERE
 
+firewall 'default' do
+    action :nothing
+end
 
-
+firewall_rule 'Open Gitlab Ports' do
+    port     [80, 8080]
+    command  :allow
+    notifies :restart, 'firewall[default]', :immediately
+end
 
 gitlab_server = 'http://localhost/'
 gitlab_token = '9nvwe38cm2cm8m'
@@ -62,26 +68,4 @@ ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
 ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = gitlab_token
 
 include_recipe 'omnibus-gitlab::default'
-
-# Notify Users of GITLAB instalation
-ruby_block 'gitlabNotify' do
-    action :nothing
-    block do
-        puts "\n######################################## End of Run Information ########################################"
-        puts "# Your Gitlab Server is running at #{node['omnibus-gitlab']['gitlab_rb']['external_url']} the gitlab token is #{gitlab_token}"
-        puts "########################################################################################################\n\n"
-    end
-end
-
-firewall 'default' do
-    action :nothing
-end
-
-firewall_rule 'Open Gitlab Ports' do
-    port     [80, 443, 8080]
-    command  :allow
-    notifies :restart, 'firewall[default]', :immediately
-    notifies :run, 'ruby_block[gitlabNotify]', :immediately
-end
-
 
