@@ -1,22 +1,23 @@
 image: chef/chefdk:latest
 
 stages:
+  - Lint
   - Test
   - Merge
   - Deploy
   
 Rubocop:
-  stage: Test
+  stage: Lint
   script:
     - rubocop utils/
 
 Cookstyle:
-  stage: Test
+  stage: Lint
   script:
     - cookstyle site_cookbooks/
   
 Foodcritic:
-  stage: Test
+  stage: Lint
   script:
     - foodcritic site_cookbooks/
 
