@@ -23,9 +23,9 @@ include_recipe 'chef-vault'
 
 
 
-gitlab_server = ''
-gitlab_token = ''
-gitlab_root_pwd = ''
+gitlab_server = 'http://localhost/'
+gitlab_token = '9nvwe38cm2cm8m'
+gitlab_root_pwd = 'superman'
 
 search(:node, "gitlab_is_server:true").each do |node|
     gitlab_server = node['gitlab']['endpoint']
