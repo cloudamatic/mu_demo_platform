@@ -43,4 +43,3 @@ ChefSpec:
   stage: Test
   script:
     - for d in ./site_cookbooks/*/ ; do (cd "$d" && chef exec rspec); done
-  allow_failure: true
