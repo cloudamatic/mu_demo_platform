@@ -9,6 +9,11 @@ Rubocop:
   stage: Test
   script:
     - rubocop ./
+
+Cookstyle:
+  stage: Test
+  script:
+    - cookstyle site_cookbooks/
   
 Foodcritic:
   stage: Test
