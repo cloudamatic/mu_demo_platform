@@ -43,15 +43,15 @@ end
 	gitlab_server = ''
 	gitlab_token = ''
 	
-	if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-		gitlab_server = ENV['GITLAB_ENDPOINT']
-		gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-	else
+	# if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+	# 	gitlab_server = ENV['GITLAB_ENDPOINT']
+	# 	gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+	# else
 		search(:node, "gitlab_is_server:true").each do |node|
 			gitlab_server = node['gitlab']['runner_endpoint']
 			gitlab_token = node['gitlab']['runnerToken']
 		end
-	end
+	# end
 
 	if !gitlab_token.nil? or !gitlab_server.nil?
 
