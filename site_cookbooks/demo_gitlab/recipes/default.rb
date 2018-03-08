@@ -30,10 +30,12 @@ gitlab_root_pwd = ''
 search(:node, "gitlab_is_server:true").each do |node|
     gitlab_server = node['gitlab']['endpoint']
     gitlab_token = node['gitlab']['runnerToken']
+    puts "GITLAB SERVER INFO FOUND!"
 end
 
 if gitlab_server.empty?
     # GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
+    puts "No GITLAB SERVER FOUND... GENERATING A TOKEN"
     gitlab_server = 'http://localhost/'
     gitlab_token = SecureRandom.urlsafe_base64
     gitlab_root_pwd = 'superman'
