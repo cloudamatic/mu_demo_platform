@@ -47,10 +47,12 @@ end
 	# 	gitlab_server = ENV['GITLAB_ENDPOINT']
 	# 	gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
 	# else
+
 		search(:node, "gitlab_is_server:true").each do |node|
 			gitlab_server = node['gitlab']['runner_endpoint']
 			gitlab_token = node['gitlab']['runnerToken']
-		end
+			puts "GITLAB SERVER INFO FOUND... Connecting to that server"
+	end
 	# end
 
 	if !gitlab_token.nil? or !gitlab_server.nil?
