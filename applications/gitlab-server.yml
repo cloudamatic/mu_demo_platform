@@ -4,7 +4,7 @@ loadbalancers:
 - name: gitlab-lb
   classic: true
   vpc:
-    vpc_id: vpc-0e5a068d03d632b0f
+    vpc_id: vpc-4820b030
   ingress_rules:
   - port: 443
     hosts:
@@ -43,7 +43,7 @@ servers:
     - recipe[demo_gitlab]
     - recipe[demo_gitlab::gitlab_runner]
     vpc:
-      vpc_id: vpc-0e5a068d03d632b0f
+      vpc_id: vpc-4820b030
       subnet_pref: private
     ingress_rules:
       -
