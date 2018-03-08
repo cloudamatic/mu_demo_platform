@@ -8,7 +8,7 @@ stages:
 Rubocop:
   stage: Test
   script:
-    - rubocop ./
+    - rubocop utils/
 
 Cookstyle:
   stage: Test
