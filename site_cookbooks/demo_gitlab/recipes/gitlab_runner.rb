@@ -49,6 +49,7 @@ end
 	# else
 
 		search(:node, "gitlab_is_server:true").each do |node|
+			puts node
 			gitlab_server = node['gitlab']['runner_endpoint']
 			gitlab_token = node['gitlab']['runnerToken']
 			puts "GITLAB SERVER INFO FOUND... Connecting to that server"
