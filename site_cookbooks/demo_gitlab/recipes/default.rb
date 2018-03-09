@@ -32,15 +32,15 @@ end
 
 
 # IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
-if !node['gitlab'] or !node['gitlab']['is_server']
+if !node['gitlab'] or !node['gitlab']['is_server'] or 1
     puts "Not A gitlab Server Yet..."
-    gitlab_server = 'http://localhost/'
+    gitlab_server ="http://#{node['ec2']['private_ip_address']}/"
     gitlab_token = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
     gitlab_root_pwd = 'superman'
 
     # ONlY SET THESE IF WE ARE MAKING A CHANGE
     node.default['gitlab']['is_server'] = true
-    node.default['gitlab']['endpoint'] = 'http://localhost/'
+    node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
     node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
     node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
     node.default['gitlab']['gitlab_root_pwd'] = 'superman'
@@ -51,10 +51,6 @@ if !node['gitlab'] or !node['gitlab']['is_server']
     ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
     ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
 end
-
-node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
-
-
 
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
 node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
