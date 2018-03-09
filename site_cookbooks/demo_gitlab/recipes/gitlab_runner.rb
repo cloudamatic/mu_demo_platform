@@ -75,13 +75,13 @@ end
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 		ENV['DOCKER_IMAGE'] = 'ubuntu'
 		ENV['REGISTER_LOCKED'] = 'false'
-		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node_name}, #{node['platform_family']}, docker"
+		ENV['RUNNER_TAG_LIST'] = "mu-node, DEMO-DEV-2018030915-GO-GITLAB-SERVER, #{node['platform_family']}, docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 
 
 		execute 'Register Runner' do
 			command "gitlab-runner register"
-			not_if "gitlab-runner verify -n #{node_name}"
+			not_if "gitlab-runner verify -n DEMO-DEV-2018030915-GO-GITLAB-SERVER"
 			notifies :restart, 'service[gitlab-runner]', :delayed
 			ignore_failure true
 		end
