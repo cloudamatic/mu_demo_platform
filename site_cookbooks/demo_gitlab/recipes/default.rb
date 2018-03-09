@@ -41,6 +41,7 @@ if !node['gitlab'] or !node['gitlab']['is_server'] or 1
     # ONlY SET THESE IF WE ARE MAKING A CHANGE
     node.default['gitlab']['is_server'] = true
     node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
+    puts node['gitlab']['endpoint']
     node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
     node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
     node.default['gitlab']['gitlab_root_pwd'] = 'superman'
