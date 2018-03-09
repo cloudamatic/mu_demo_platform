@@ -57,7 +57,7 @@ else
     end
 end
 
-	if !gitlab_token.nil? and !gitlab_server.nil?
+	if !gitlab_token.empty? and !gitlab_server.empty?
 
 		puts "******************************************************"
 		puts gitlab_server
