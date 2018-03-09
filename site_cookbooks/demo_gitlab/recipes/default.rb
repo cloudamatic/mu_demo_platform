@@ -58,14 +58,14 @@ end
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 ENV['GITLAB_ENDPOINT'] = gitlab_server
 ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
-ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = gitlab_token
+ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = '9nvwe38cm2cm8m'
 
 
 # Set an attribute to identify the node as a GitLab Server
 node.default['gitlab']['is_server'] = true
 node.default['gitlab']['endpoint'] = gitlab_server
 node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
-node.default['gitlab']['runner_token'] = gitlab_token
+node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m'
 
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
 node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
