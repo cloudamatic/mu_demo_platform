@@ -29,44 +29,6 @@ firewall_rule 'Open Gitlab Ports' do
     notifies :restart, 'firewall[default]', :immediately
 end
 
-gitlab_server = ''
-gitlab_token = ''
-gitlab_root_pwd = ''
-
-if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-    # CHECK FOR ENV VARIABLES WITH INFORMATION
-    gitlab_server = ENV['GITLAB_ENDPOINT']
-    gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-    gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
-else
-    # SEARCH FOR NODE ATTRIBUTE WITH THE INFORMATION
-    gitlabServers = search(:node, "gitlab_is_server:true") do |node|
-        puts "GITLAB SERVER INFO FOUND!"
-        gitlab_server = node['gitlab']['endpoint']
-        gitlab_token = node['gitlab']['runner_token']
-    end
-end
-
-# IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
-if gitlab_server.empty?
-    puts "No GITLAB SERVER FOUND... GENERATING A TOKEN"
-    gitlab_server = 'http://localhost/'
-    gitlab_token = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
-    gitlab_root_pwd = 'superman'
-end
-
-# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
-ENV['GITLAB_ENDPOINT'] = gitlab_server
-ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
-ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = '9nvwe38cm2cm8m'
-
-
-# Set an attribute to identify the node as a GitLab Server
-node.default['gitlab']['is_server'] = true
-node.default['gitlab']['endpoint'] = gitlab_server
-node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
-node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m'
-
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
 node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
 node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
@@ -77,5 +39,27 @@ node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
   }
 
 
+# IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
+if node['gitlab']['is_server'].nil?
+    puts "Not A gitlab Server Yet..."
+    gitlab_server = 'http://localhost/'
+    gitlab_token = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
+    gitlab_root_pwd = 'superman'
+
+    # ONlY SET THESE IF WE ARE MAKING A CHANGE
+    node.default['gitlab']['is_server'] = true
+    node.default['gitlab']['endpoint'] = 'http://localhost/'
+    node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
+    node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
+    node.default['gitlab']['gitlab_root_pwd'] = 'superman'
+
+    # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
+    ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
+    ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
+    ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
+end
+
 include_recipe 'omnibus-gitlab::default'
+
+
 
