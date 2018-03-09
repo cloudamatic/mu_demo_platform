@@ -27,7 +27,8 @@ case node['platform_family']
 end
 	
 	execute 'Configure Repositories' do
-	  command "curl -L #{script_url} | sudo bash"
+		command "curl -L #{script_url} | sudo bash"
+		not_if !Dir.glob('./script.*.sh').empty?
 	end
 	
 	package 'gitlab-runner' do
