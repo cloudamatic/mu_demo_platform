@@ -52,6 +52,9 @@ if !node['gitlab'] or !node['gitlab']['is_server']
     ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
 end
 
+puts node['ec2']
+node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip']}/"
+
 
 
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
