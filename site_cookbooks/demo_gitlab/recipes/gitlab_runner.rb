@@ -61,26 +61,26 @@ end
 	if !gitlab_token.empty? and !gitlab_server.empty?
 
 		puts "******************************************************"
-		puts node['name']
+		puts node['hostname']
 		puts gitlab_server
 		puts gitlab_token
 		puts "******************************************************"
 		
 		# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 		ENV['CI_SERVER_URL'] = gitlab_server
-		ENV['RUNNER_NAME'] = node['name']
+		ENV['RUNNER_NAME'] = node['hostname']
 		ENV['REGISTRATION_TOKEN'] = gitlab_token
 		ENV['REGISTER_NON_INTERACTIVE'] = 'true'
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 		ENV['DOCKER_IMAGE'] = 'ubuntu'
 		ENV['REGISTER_LOCKED'] = 'false'
-		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node['name']}, #{node['platform_family']}, docker"
+		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname']}, #{node['platform_family']}, docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 
 
 		execute 'Register Runner' do
 			command "gitlab-runner register"
-			not_if "gitlab-runner verify -n #{node['name']}"
+			not_if "gitlab-runner verify -n #{node['hostname']}"
 			notifies :restart, 'service[gitlab-runner]', :delayed
 			ignore_failure true
 		end
