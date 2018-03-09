@@ -67,13 +67,13 @@ end
 		
 		# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 		ENV['CI_SERVER_URL'] = gitlab_server
-		ENV['RUNNER_NAME'] = 'NAME' #node['ec2']['public_dns_name']
+		ENV['RUNNER_NAME'] = node['name']
 		ENV['REGISTRATION_TOKEN'] = gitlab_token
 		ENV['REGISTER_NON_INTERACTIVE'] = 'true'
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 		ENV['DOCKER_IMAGE'] = 'ubuntu'
 		ENV['REGISTER_LOCKED'] = 'false'
-		ENV['$RUNNER_TAG_LIST'] = "#{node['ec2']['public_dns_name']}, #{node['platform_family']}, docker"
+		ENV['$RUNNER_TAG_LIST'] = "#{node['name']}, #{node['platform_family']}, docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 
 
