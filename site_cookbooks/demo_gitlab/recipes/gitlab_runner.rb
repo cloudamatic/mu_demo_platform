@@ -45,14 +45,14 @@ end
 	
 	if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
     # CHECK FOR ENV VARIABLES WITH INFORMATION
-    gitlab_server = ENV['GITLAB_ENDPOINT']
+    gitlab_server = ENV['GITLAB_RUNNER_ENDPOINT']
     gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
 		gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
 		puts "GITLAB SERVER INFO FOUND IN ENV VARIABLES!"
 else
     # SEARCH FOR NODE ATTRIBUTE WITH THE INFORMATION
     gitlabServers = search(:node, "gitlab_is_server:true") do |node|
-        gitlab_server = node['gitlab']['endpoint']
+        gitlab_server = node['gitlab']['runner_endpoint']
 				gitlab_token = node['gitlab']['runner_token']
 				puts "GITLAB SERVER INFO FOUND IN NODE ATTRIBUTES!"
     end

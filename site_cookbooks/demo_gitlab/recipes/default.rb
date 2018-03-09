@@ -41,12 +41,13 @@ if !node['gitlab'] or !node['gitlab']['is_server']
     # ONlY SET THESE IF WE ARE MAKING A CHANGE
     node.default['gitlab']['is_server'] = true
     node.default['gitlab']['endpoint'] = 'http://localhost/'
-    node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
+    node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip']}/"
     node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
     node.default['gitlab']['gitlab_root_pwd'] = 'superman'
 
     # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
     ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
+    ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
     ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
     ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
 end
