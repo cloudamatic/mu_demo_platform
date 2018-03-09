@@ -29,14 +29,6 @@ firewall_rule 'Open Gitlab Ports' do
     notifies :restart, 'firewall[default]', :immediately
 end
 
-# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
-node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
-    "X-Forwarded-Proto" => "https",
-    "X-Forwarded-Ssl" => "on"
-  }
 
 
 # IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
@@ -58,6 +50,17 @@ if node['gitlab']['is_server'].nil?
     ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
     ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
 end
+
+
+
+# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
+node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
+    "X-Forwarded-Proto" => "https",
+    "X-Forwarded-Ssl" => "on"
+  }
 
 include_recipe 'omnibus-gitlab::default'
 
