@@ -73,7 +73,7 @@ end
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 		ENV['DOCKER_IMAGE'] = 'ubuntu'
 		ENV['REGISTER_LOCKED'] = 'false'
-		ENV['$RUNNER_TAG_LIST'] = "#{node['name']}, #{node['platform_family']}, docker"
+		ENV['$RUNNER_TAG_LIST'] = "docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 
 
