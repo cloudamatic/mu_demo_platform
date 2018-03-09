@@ -33,39 +33,49 @@ gitlab_server = ''
 gitlab_token = ''
 gitlab_root_pwd = ''
 
-search(:node, "gitlab_is_server:true").each do |node|
-    gitlab_server = node['gitlab']['endpoint']
-    gitlab_token = node['gitlab']['runnerToken']
-    puts "GITLAB SERVER INFO FOUND!"
+if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+    # CHECK FOR ENV VARIABLES WITH INFORMATION
+    gitlab_server = ENV['GITLAB_ENDPOINT']
+    gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+    gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
+else
+    # SEARCH FOR NODE ATTRIBUTE WITH THE INFORMATION
+    gitlabServers = search(:node, "gitlab_is_server:true") do |node|
+        puts "GITLAB SERVER INFO FOUND!"
+        gitlab_server = node['gitlab']['endpoint']
+        gitlab_token = node['gitlab']['runner_token']
+    end
 end
 
+# IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
 if gitlab_server.empty?
-    # GENERATE A RUNNERTOKEN AND A ROOT PASSWORD
     puts "No GITLAB SERVER FOUND... GENERATING A TOKEN"
     gitlab_server = 'http://localhost/'
     gitlab_token = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
     gitlab_root_pwd = 'superman'
 end
 
-# Set an attribute to identify the node as a GitLab Server
-node.override['gitlab']['is_server'] = true
-node.override['gitlab']['endpoint'] = gitlab_server
-node.override['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
-
-node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
-node.override['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
-node.override['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
-    "X-Forwarded-Proto" => "https",
-    "X-Forwarded-Ssl" => "on"
-  }
-
-# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
-node.override['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
-
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 ENV['GITLAB_ENDPOINT'] = gitlab_server
 ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
 ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = gitlab_token
+
+
+# Set an attribute to identify the node as a GitLab Server
+node.default['gitlab']['is_server'] = true
+node.default['gitlab']['endpoint'] = gitlab_server
+node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
+node.default['gitlab']['runner_token'] = 'runner_token'
+
+# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
+node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
+    "X-Forwarded-Proto" => "https",
+    "X-Forwarded-Ssl" => "on"
+  }
+
 
 include_recipe 'omnibus-gitlab::default'
 

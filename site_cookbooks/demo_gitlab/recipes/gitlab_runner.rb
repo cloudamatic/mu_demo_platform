@@ -43,27 +43,21 @@ end
 	gitlab_server = ''
 	gitlab_token = ''
 	
-	# if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-	# 	gitlab_server = ENV['GITLAB_ENDPOINT']
-	# 	gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-	# else
+	if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+    # CHECK FOR ENV VARIABLES WITH INFORMATION
+    gitlab_server = ENV['GITLAB_ENDPOINT']
+    gitlab_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+    gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
+else
+    # SEARCH FOR NODE ATTRIBUTE WITH THE INFORMATION
+    gitlabServers = search(:node, "gitlab_is_server:true") do |node|
+        puts "GITLAB SERVER INFO FOUND!"
+        gitlab_server = node['gitlab']['endpoint']
+        gitlab_token = node['gitlab']['runner_token']
+    end
+end
 
-	gitlabServers = search(:node, "gitlab_is_server:true") do |node|
-		puts node
-	  gitlab_server = node['gitlab']['runner_endpoint']
-			gitlab_token = node['gitlab']['runnerToken']
-		puts "GITLAB SERVER INFO FOUND... Connecting to that server"
-	end
-
-	# 	search(:node, "gitlab_is_server:true").each do |node|
-	# 		puts node
-	# 		gitlab_server = node['gitlab']['runner_endpoint']
-	# 		gitlab_token = node['gitlab']['runnerToken']
-			
-	# end
-	# end
-
-	if !gitlab_token.nil? or !gitlab_server.nil?
+	if !gitlab_token.nil? and !gitlab_server.nil?
 
 		puts "******************************************************"
 		puts gitlab_server
