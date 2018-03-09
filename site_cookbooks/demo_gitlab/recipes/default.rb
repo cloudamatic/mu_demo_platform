@@ -32,7 +32,7 @@ end
 
 
 # IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
-if node['gitlab']['is_server']
+if !node['gitlab'] or !node['gitlab']['is_server']
     puts "Not A gitlab Server Yet..."
     gitlab_server = 'http://localhost/'
     gitlab_token = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
