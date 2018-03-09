@@ -61,27 +61,26 @@ end
 	if !gitlab_token.empty? and !gitlab_server.empty?
 
 		puts "******************************************************"
+		puts node['name']
 		puts gitlab_server
 		puts gitlab_token
 		puts "******************************************************"
 		
-		node_name = node['name']
-
 		# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 		ENV['CI_SERVER_URL'] = gitlab_server
-		ENV['RUNNER_NAME'] = node_name
+		ENV['RUNNER_NAME'] = node['name']
 		ENV['REGISTRATION_TOKEN'] = gitlab_token
 		ENV['REGISTER_NON_INTERACTIVE'] = 'true'
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 		ENV['DOCKER_IMAGE'] = 'ubuntu'
 		ENV['REGISTER_LOCKED'] = 'false'
-		ENV['RUNNER_TAG_LIST'] = "mu-node, DEMO-DEV-2018030915-GO-GITLAB-SERVER, #{node['platform_family']}, docker"
+		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node['name']}, #{node['platform_family']}, docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 
 
 		execute 'Register Runner' do
 			command "gitlab-runner register"
-			not_if "gitlab-runner verify -n DEMO-DEV-2018030915-GO-GITLAB-SERVER"
+			not_if "gitlab-runner verify -n #{node['name']}"
 			notifies :restart, 'service[gitlab-runner]', :delayed
 			ignore_failure true
 		end
