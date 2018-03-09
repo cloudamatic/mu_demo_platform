@@ -77,7 +77,7 @@ end
 		ENV['REGISTER_RUN_UNTAGGED'] = 'true'
 		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname']}, #{node['platform_family']}, docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
-		ENV['RUNNER_REQUEST_CONCURRENCY'] = 100
+		ENV['RUNNER_REQUEST_CONCURRENCY'] = '100'
 
 
 		execute 'Register Runner' do
