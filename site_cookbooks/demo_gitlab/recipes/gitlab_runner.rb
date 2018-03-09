@@ -78,6 +78,7 @@ end
 		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname']}, #{node['platform_family']}, docker"
 		ENV['RUNNER_EXECUTOR'] = 'docker'
 		ENV['RUNNER_REQUEST_CONCURRENCY'] = '100'
+		ENV['RUNNER_LIMIT'] = '99'
 
 
 		execute 'Register Runner' do
