@@ -69,7 +69,7 @@ end
 		ENV['CI_SERVER_URL'] = gitlab_server
 		ENV['RUNNER_NAME'] = node['ec2']['public_dns_name']
 		ENV['REGISTRATION_TOKEN'] = gitlab_token
-		ENV['REGISTER_NON_INTERACTIVE'] = true
+		ENV['REGISTER_NON_INTERACTIVE'] = 'true'
 
 
 		execute 'Register Runner' do
