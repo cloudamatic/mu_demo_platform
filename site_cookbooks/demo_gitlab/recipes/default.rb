@@ -65,7 +65,7 @@ ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = gitlab_token
 node.default['gitlab']['is_server'] = true
 node.default['gitlab']['endpoint'] = gitlab_server
 node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['public_dns_name']}/"
-node.default['gitlab']['runner_token'] = runner_token
+node.default['gitlab']['runner_token'] = gitlab_token
 
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
 node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = gitlab_server
