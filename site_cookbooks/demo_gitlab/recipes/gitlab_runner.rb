@@ -80,6 +80,10 @@ end
 		ENV['RUNNER_REQUEST_CONCURRENCY'] = '100'
 		ENV['RUNNER_LIMIT'] = '99'
 
+		node['gitlab-runner']['env'] do |varable|
+			puts "Key: #{varable}, Value: #{node['gitlab-runner']['env'][variable]}"
+		end
+
 
 		execute 'Register Runner' do
 			command "gitlab-runner register"

@@ -29,32 +29,11 @@ firewall_rule 'Open Gitlab Ports' do
     notifies :restart, 'firewall[default]', :immediately
 end
 
-
-
-# IF WE HAVEN'T FOUND INFORMATION GENERATE THE INFORMATION
-if !node['gitlab'] or !node['gitlab']['is_server']
-    # ONlY SET THESE IF WE ARE MAKING A CHANGE
-    node.default['gitlab']['is_server'] = true
-    node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
-    node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
-    node.default['gitlab']['runner_token'] = '9nvwe38cm2cm8m' #SecureRandom.urlsafe_base64
-    node.default['gitlab']['gitlab_root_pwd'] = 'superman'
-
-    # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
-    ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
-    ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
-    ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
-    ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
-end
-
-# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
-node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
-    "X-Forwarded-Proto" => "https",
-    "X-Forwarded-Ssl" => "on"
-  }
+# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
+ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
+ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
+ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
+ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
 
 include_recipe 'omnibus-gitlab::default'
 
