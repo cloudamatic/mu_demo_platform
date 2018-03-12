@@ -1,9 +1,4 @@
-if !node['gitlab'] or !node['gitlab']['is_server']
-    # ONlY SET THESE ONCE
-    node.default['gitlab']['is_server'] = true
-    node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-    node.default['gitlab']['gitlab_root_pwd'] = 'superman'
-end
+
 
 node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
 node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
