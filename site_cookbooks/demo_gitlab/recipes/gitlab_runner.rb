@@ -80,8 +80,8 @@ end
 		ENV['RUNNER_REQUEST_CONCURRENCY'] = '100'
 		ENV['RUNNER_LIMIT'] = '99'
 
-		node['gitlab-runner']['env'] do |varable|
-			puts "Key: #{varable}, Value: #{node['gitlab-runner']['env'][variable]}"
+		node['gitlab-runner']['env'].each do |key, value|
+			puts "Key: #{key}, Value: #{value}"
 		end
 
 
