@@ -21,9 +21,9 @@ include_recipe 'chef-vault'
 
 if !node['gitlab'] or !node['gitlab']['is_server']
     # ONlY SET THESE ONCE
-    node.default['gitlab']['is_server'] = true
-    node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-    node.default['gitlab']['gitlab_root_pwd'] = 'superman'
+    node.override['gitlab']['is_server'] = true
+    node.override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
+    node.override['gitlab']['gitlab_root_pwd'] = 'superman'
 end
 
 firewall 'default' do

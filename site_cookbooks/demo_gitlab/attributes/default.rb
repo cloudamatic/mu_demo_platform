@@ -18,11 +18,20 @@ node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
 
 
 # VARIABLES FOR gITLAB RUNNER CONFIGURATION
+
+
+
+
+# SET RUNNER SETTINGS
 #node.default['gitlab-runner']['env']['CI_SERVER_URL'] = gitlab_server
-node.default['gitlab-runner']['env']['RUNNER_NAME'] = node['hostname']
 #node.default['gitlab-runner']['env']['REGISTRATION_TOKEN'] = gitlab_token
-node.default['gitlab-runner']['env']['REGISTER_NON_INTERACTIVE'] = 'true'
-node.default['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker'
+node.default['gitlab-runner']['env']['RUNNER_NAME'] = node['hostname']
+node.default['gitlab-runner']['env']['REGISTER_NON_INTERACTIVE'] = 'true' # DON'T CHANGE THIS
+
+
+node.default['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker' #SET RUNNER EXECUTOR
+
+# CONFIGURE DOCKER SETTINGS
 node.default['gitlab-runner']['env']['DOCKER_IMAGE'] = 'ubuntu'
 node.default['gitlab-runner']['env']['REGISTER_LOCKED'] = 'false'
 node.default['gitlab-runner']['env']['REGISTER_RUN_UNTAGGED'] = 'true'
