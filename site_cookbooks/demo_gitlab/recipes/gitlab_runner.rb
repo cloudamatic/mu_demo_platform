@@ -68,20 +68,10 @@ end
 		
 		# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 		ENV['CI_SERVER_URL'] = gitlab_server
-		ENV['RUNNER_NAME'] = node['hostname']
 		ENV['REGISTRATION_TOKEN'] = gitlab_token
-		ENV['REGISTER_NON_INTERACTIVE'] = 'true'
-		ENV['RUNNER_EXECUTOR'] = 'docker'
-		ENV['DOCKER_IMAGE'] = 'ubuntu'
-		ENV['REGISTER_LOCKED'] = 'false'
-		ENV['REGISTER_RUN_UNTAGGED'] = 'true'
-		ENV['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname']}, #{node['platform_family']}, docker"
-		ENV['RUNNER_EXECUTOR'] = 'docker'
-		ENV['RUNNER_REQUEST_CONCURRENCY'] = '100'
-		ENV['RUNNER_LIMIT'] = '99'
 
 		node['gitlab-runner']['env'].each do |key, value|
-			puts "Key: #{key}, Value: #{value}"
+			ENV[key] = value
 		end
 
 

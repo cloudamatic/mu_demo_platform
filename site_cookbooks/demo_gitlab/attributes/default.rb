@@ -8,6 +8,21 @@ end
 node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
 node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
 
+# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
+node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
+node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
+    "X-Forwarded-Proto" => "https",
+    "X-Forwarded-Ssl" => "on"
+}
+
+
+
+
+
+
+# VARIABLES FOR gITLAB RUNNER CONFIGURATION
 #node.default['gitlab-runner']['env']['CI_SERVER_URL'] = gitlab_server
 node.default['gitlab-runner']['env']['RUNNER_NAME'] = node['hostname']
 #node.default['gitlab-runner']['env']['REGISTRATION_TOKEN'] = gitlab_token
@@ -21,11 +36,3 @@ node.default['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker'
 node.default['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 node.default['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
 
-# SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
-node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false
-node.default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
-    "X-Forwarded-Proto" => "https",
-    "X-Forwarded-Ssl" => "on"
-}
