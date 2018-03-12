@@ -1,7 +1,10 @@
+node.default['gitlab']['endpoint'] = "http://#{node['hostname']}/"
+node.default['gitlab']['runner_endpoint'] = "http://#{node['hostname']}/"
 
-
-node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
-node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
+if node['ec2']['private_ip_address']
+    node.default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
+    node.default['gitlab']['runner_endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
+end
 
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
 node.default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
