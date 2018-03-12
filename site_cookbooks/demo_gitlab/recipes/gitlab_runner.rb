@@ -89,5 +89,3 @@ end
 	docker_service 'default' do
 	  action [:create, :start]
 	end
-
-	#i-0dd79988059afa1c7

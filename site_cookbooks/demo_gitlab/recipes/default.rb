@@ -19,11 +19,13 @@
 require 'securerandom'
 include_recipe 'chef-vault'
 
+puts "################### #{node['gitlab']}###################"
+
 if !node['gitlab'] or !node['gitlab']['is_server']
     # ONlY SET THESE ONCE
     node.override['gitlab']['is_server'] = true
-    node.override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-    node.override['gitlab']['gitlab_root_pwd'] = 'superman'
+    node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
+    node.default['gitlab']['gitlab_root_pwd'] = 'superman'
 end
 
 firewall 'default' do
@@ -44,5 +46,15 @@ ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
 
 include_recipe 'omnibus-gitlab::default'
 
+execute 'Reconfigure Gitlab' do
+    command "gitlab-ctl reconfigure"
+    not_if "gitlab-ctl status"
+    notifies :run, 'execute[Restart Gitlab]', :immediately
+end
+
+execute 'Restart Gitlab' do
+    command "gitlab-ctl restart"
+    action :nothing
+end
 
 
