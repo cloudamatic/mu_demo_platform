@@ -21,12 +21,7 @@ include_recipe 'chef-vault'
 
 puts "################### #{node['gitlab']}###################"
 
-if !node['gitlab'] or !node['gitlab']['is_server']
-    # ONlY SET THESE ONCE
-    node.override['gitlab']['is_server'] = true
-    node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-    node.default['gitlab']['gitlab_root_pwd'] = 'superman'
-end
+node.override['gitlab']['is_server'] = true
 
 firewall 'default' do
     action :nothing
