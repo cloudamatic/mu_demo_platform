@@ -70,6 +70,7 @@ end
 		ENV['CI_SERVER_URL'] = gitlab_server
 		ENV['REGISTRATION_TOKEN'] = gitlab_token
 
+		# LOOP THROUGH THE ENV ATTRIBUTES, and DROP THEM INTO ACTUAL ATTRIBUTE VARIABLES
 		node['gitlab-runner']['env'].each do |key, value|
 			ENV[key] = value
 		end
@@ -88,4 +89,5 @@ end
 	docker_service 'default' do
 	  action [:create, :start]
 	end
-	
+
+	#i-0dd79988059afa1c7
