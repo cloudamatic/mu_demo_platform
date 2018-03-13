@@ -21,6 +21,23 @@ include_recipe 'chef-vault'
 
 node.override['gitlab']['is_server'] = true
 
+# ONlY SET THESE IF NOTHING IS SET EXPLICITY
+puts "################### #{node['gitlab']}###################"
+puts node['gitlab']
+if !node['gitlab'].has_key?('runner_token')
+    puts "###################### Generating Runner Token DOESNT EXIST ######################"
+    override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
+end
+if node['gitlab']['runner_token'].empty?
+    puts "###################### Generating Runner Token EMPTY ######################"
+    override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
+end
+
+
+if !node['gitlab'].has_key?('gitlab_root_pwd') or node['gitlab']['gitlab_root_pwd'].empty?
+    puts "###################### Generating Root Password ######################"
+    override['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
+end
 puts "################### #{node['gitlab']}###################"
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER

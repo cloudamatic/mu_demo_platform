@@ -44,20 +44,3 @@ default['gitlab-runner']['env']['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname'
 default['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker'
 default['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 default['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
-
-# ONlY SET THESE IF NOTHING IS SET EXPLICITY
-puts node['gitlab']
-if !node['gitlab'].has_key?('runner_token')
-    puts "###################### Generating Runner Token DOESNT EXIST ######################"
-    override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-end
-if node['gitlab']['runner_token'].empty?
-    puts "###################### Generating Runner Token EMPTY ######################"
-    override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-end
-
-
-if !node['gitlab'].has_key?('gitlab_root_pwd') or node['gitlab']['gitlab_root_pwd'].empty?
-    puts "###################### Generating Root Password ######################"
-    override['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
-end
