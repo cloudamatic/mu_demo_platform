@@ -24,22 +24,18 @@ node.set['gitlab']['is_server'] = true
 # GENERATE AND SET RUNNER TOKEN AND ROOT PASSWORD
 if node['gitlab'].key?('runner_token') and !node['gitlab']['runner_token'].empty?
     runner_token = node['gitlab']['runner_token']
+elsif ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+    runner_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
 else
-    if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-        runner_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
-    else
-        runner_token = SecureRandom.urlsafe_base64
-    end
+    runner_token = SecureRandom.urlsafe_base64
 end
 
 if node['gitlab'].key?('gitlab_root_pwd') and !node['gitlab']['gitlab_root_pwd'].empty?
     gitlab_root_pwd = node['gitlab']['gitlab_root_pwd']
+elsif ENV['GITLAB_ROOT_PASSWORD']
+    gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
 else
-    if ENV['GITLAB_ROOT_PASSWORD']
-        gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
-    else
-        gitlab_root_pwd = SecureRandom.urlsafe_base64
-    end
+    gitlab_root_pwd = SecureRandom.urlsafe_base64
 end
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
