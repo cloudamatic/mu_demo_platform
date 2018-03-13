@@ -21,20 +21,27 @@ include_recipe 'chef-vault'
 
 node.override['gitlab']['is_server'] = true
 
-puts "############## #{node['gitlab']} ##########"
-# ONlY SET THESE IF NOTHING IS SET EXPLICITY
-if !node['gitlab'] or !node['gitlab']['is_server']
-    puts "-------------- REGENERATING STUFFS -------------"
-    node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
-    node.default['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
+# GENERATE AND SET RUNNER TOKEN AND ROOT PASSWORD
+if node['gitlab'].key?('runner_token')
+    runner_token = node['gitlab']['runner_token']
+else
+    runner_token = SecureRandom.urlsafe_base64
 end
-puts "############## #{node['gitlab']} ##########"
+
+if node['gitlab'].key?('gitlab_root_pwd')
+    gitlab_root_pwd = node['gitlab']['gitlab_root_pwd']
+else
+    gitlab_root_pwd = SecureRandom.urlsafe_base64
+end
+node.default['gitlab']['runner_token'] = runner_token
+node.default['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
+
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
 ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
-ENV['GITLAB_ROOT_PASSWORD'] = node['gitlab']['gitlab_root_pwd']
-ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = node['gitlab']['runner_token']
+ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
+ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
 
 include_recipe 'omnibus-gitlab::default'
 
