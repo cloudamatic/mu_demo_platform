@@ -19,7 +19,7 @@
 # require 'securerandom'
 include_recipe 'chef-vault'
 
-node.set['gitlab']['is_server'] = true
+node.normal['gitlab']['is_server'] = true
 
 # GENERATE AND SET RUNNER TOKEN AND ROOT PASSWORD
 if node['gitlab'].key?('runner_token') and !node['gitlab']['runner_token'].empty?
@@ -44,8 +44,8 @@ ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
 ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
 ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
 
-node.set['gitlab']['runner_token'] = runner_token
-node.set['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
+node.normal['gitlab']['runner_token'] = runner_token
+node.normal['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
 
 include_recipe 'omnibus-gitlab::default'
 
