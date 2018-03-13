@@ -23,7 +23,7 @@ node.override['gitlab']['is_server'] = true
 
 puts "############## #{node['gitlab']} ##########"
 # ONlY SET THESE IF NOTHING IS SET EXPLICITY
-if !node['gitlab'] or !node['gitlab']['is_server'
+if !node['gitlab'] or !node['gitlab']['is_server']
     puts "-------------- REGENERATING STUFFS -------------"
     node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
     node.default['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
