@@ -52,9 +52,7 @@ include_recipe 'omnibus-gitlab::default'
 
 execute 'Reconfigure Gitlab' do
     command "gitlab-ctl reconfigure"
-    # not_if "gitlab-ctl status"
-    # retries 5
-    # retry_delay 60
+    not_if "gitlab-ctl status"
     ignore_failure true
     notifies :run, 'execute[Restart Gitlab]', :immediately
 end
