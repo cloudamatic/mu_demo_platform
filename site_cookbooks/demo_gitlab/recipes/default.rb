@@ -21,24 +21,20 @@ include_recipe 'chef-vault'
 
 node.set['gitlab']['is_server'] = true
 
-puts "------------ #{node['gitlab']} ---------------"
 # GENERATE AND SET RUNNER TOKEN AND ROOT PASSWORD
-if node['gitlab'].key?('runner_token')
+if node['gitlab'].key?('runner_token') and !node['gitlab']['runner_token'].empty?
     runner_token = node['gitlab']['runner_token']
 else
     runner_token = SecureRandom.urlsafe_base64
+    node.set['gitlab']['runner_token'] = runner_token
 end
 
-if node['gitlab'].key?('gitlab_root_pwd')
+if node['gitlab'].key?('gitlab_root_pwd') and !node['gitlab']['gitlab_root_pwd'].empty?
     gitlab_root_pwd = node['gitlab']['gitlab_root_pwd']
 else
     gitlab_root_pwd = SecureRandom.urlsafe_base64
+    node.set['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
 end
-
-node.set['gitlab']['runner_token'] = runner_token
-node.set['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
-puts "------------ #{node['gitlab']} ---------------"
-
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']

@@ -17,16 +17,6 @@ default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
     "X-Forwarded-Ssl" => "on"
 }
 
-
-
-
-
-
-# VARIABLES FOR gITLAB RUNNER CONFIGURATION
-
-
-
-
 # SET RUNNER SETTINGS
 #default['gitlab-runner']['env']['CI_SERVER_URL'] = gitlab_server
 #default['gitlab-runner']['env']['REGISTRATION_TOKEN'] = gitlab_token
