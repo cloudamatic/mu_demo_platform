@@ -21,14 +21,16 @@ include_recipe 'chef-vault'
 
 node.override['gitlab']['is_server'] = true
 
+puts "################### #{node['gitlab']}###################"
 # ONlY SET THESE IF NOTHING IS SET EXPLICITY
 if !node['gitlab'].has_key?('runner_token') or node['gitlab']['runner_token'].empty?
+    puts "###################### Generating Runner Token ######################"
     node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
 end
 if !node['gitlab'].has_key?('gitlab_root_pwd') or node['gitlab']['gitlab_root_pwd'].empty?
+    puts "###################### Generating Root Password ######################"
     node.default['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
 end
-
 puts "################### #{node['gitlab']}###################"
 
 
