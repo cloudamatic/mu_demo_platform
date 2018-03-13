@@ -19,7 +19,7 @@
 # require 'securerandom'
 include_recipe 'chef-vault'
 
-node.override['gitlab']['is_server'] = true
+node.set['gitlab']['is_server'] = true
 
 puts "------------ #{node['gitlab']} ---------------"
 # GENERATE AND SET RUNNER TOKEN AND ROOT PASSWORD
@@ -35,8 +35,8 @@ else
     gitlab_root_pwd = SecureRandom.urlsafe_base64
 end
 
-node.override['gitlab']['runner_token'] = runner_token
-node.override['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
+node.set['gitlab']['runner_token'] = runner_token
+node.set['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
 puts "------------ #{node['gitlab']} ---------------"
 
 
