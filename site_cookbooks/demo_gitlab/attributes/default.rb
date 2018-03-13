@@ -45,6 +45,7 @@ default['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 default['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
 
 # ONlY SET THESE IF NOTHING IS SET EXPLICITY
+puts node['gitlab']
 if !node['gitlab'].has_key?('runner_token')
     puts "###################### Generating Runner Token DOESNT EXIST ######################"
     override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
