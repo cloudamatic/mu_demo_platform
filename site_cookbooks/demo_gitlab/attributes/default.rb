@@ -17,6 +17,11 @@ default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
     "X-Forwarded-Proto" => "https",
     "X-Forwarded-Ssl" => "on"
 }
+default['omnibus-gitlab']['gitlab_rb']['gitlab_rails']['time_zone'] = "UTC"
+default['omnibus-gitlab']['gitlab_rb']['gitlab_rails']['backup_keep_time'] = 604800
+default['omnibus-gitlab']['gitlab_rb']['gitlab_rails']['gitlab_email_enabled'] = false
+default['omnibus-gitlab']['gitlab_rb']['gitlab_rails']['backup_path'] = "/var/opt/gitlab/backups"
+
 
 # SET RUNNER SETTINGS
 normal['gitlab-runner']['env']['RUNNER_NAME'] = node['hostname']
