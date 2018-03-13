@@ -1,7 +1,7 @@
 default['gitlab']['endpoint'] = "http://#{node['hostname']}/"
 default['gitlab']['runner_endpoint'] = "http://#{node['hostname']}/"
 default['gitlab']['gitlab_root_pwd'] = 'superman'
-default['gitlab']['runner_token'] = ''
+# default['gitlab']['runner_token'] = ''
 
 if attribute?('ec2')
     default['gitlab']['endpoint'] = "http://#{node['ec2']['private_ip_address']}/"
