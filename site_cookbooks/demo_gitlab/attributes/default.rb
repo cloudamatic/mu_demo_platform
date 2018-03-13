@@ -45,11 +45,17 @@ default['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 default['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
 
 # ONlY SET THESE IF NOTHING IS SET EXPLICITY
-if !node['gitlab'].has_key?('runner_token') or node['gitlab']['runner_token'].empty?
-    puts "###################### Generating Runner Token ######################"
+if !node['gitlab'].has_key?('runner_token')
+    puts "###################### Generating Runner Token DOESNT EXIST ######################"
     override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
 end
-if !node['gitlab'].has_key?('runner_token') or node['gitlab']['runner_token'].empty?
+if node['gitlab']['runner_token'].empty?
+    puts "###################### Generating Runner Token EMPTY ######################"
+    override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
+end
+
+
+if !node['gitlab'].has_key?('gitlab_root_pwd') or node['gitlab']['gitlab_root_pwd'].empty?
     puts "###################### Generating Root Password ######################"
     override['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
 end
