@@ -34,10 +34,10 @@ if node['gitlab'].key?('gitlab_root_pwd')
 else
     gitlab_root_pwd = SecureRandom.urlsafe_base64
 end
-puts "------------ #{node['gitlab']} ---------------"
 
 node.override['gitlab']['runner_token'] = runner_token
 node.override['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
+puts "------------ #{node['gitlab']} ---------------"
 
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
