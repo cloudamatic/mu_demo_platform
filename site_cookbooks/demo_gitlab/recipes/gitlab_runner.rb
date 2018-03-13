@@ -28,11 +28,11 @@ end
 	
 	execute 'Configure Repositories' do
 		command "curl -L #{script_url} | sudo bash"
-		not_if !Dir.glob('./script.*.sh').empty?
+		not_if "gitlab-runner status"
 	end
 	
 	package 'gitlab-runner' do
-	  action :install
+	  action :upgrade
 	end
 	
 	service 'gitlab-runner' do
