@@ -9,7 +9,7 @@ if attribute?('ec2')
 end
 
 # SETUP VARIABLES FOR GITLAB.RB CONFIGURATION
-default['omnibus-gitlab']['run_reconfigure'] = false
+# default['omnibus-gitlab']['run_reconfigure'] = false
 default['omnibus-gitlab']['gitlab_rb']['external_url'] = node['gitlab']['endpoint']
 default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_port'] = 80
 default['omnibus-gitlab']['gitlab_rb']['nginx']['listen_https'] = false

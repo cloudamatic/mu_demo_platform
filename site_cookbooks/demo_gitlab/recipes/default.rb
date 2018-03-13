@@ -25,13 +25,21 @@ node.set['gitlab']['is_server'] = true
 if node['gitlab'].key?('runner_token') and !node['gitlab']['runner_token'].empty?
     runner_token = node['gitlab']['runner_token']
 else
-    runner_token = SecureRandom.urlsafe_base64
+    if ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+        runner_token = ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN']
+    else
+        runner_token = SecureRandom.urlsafe_base64
+    end
 end
 
 if node['gitlab'].key?('gitlab_root_pwd') and !node['gitlab']['gitlab_root_pwd'].empty?
     gitlab_root_pwd = node['gitlab']['gitlab_root_pwd']
 else
-    gitlab_root_pwd = SecureRandom.urlsafe_base64
+    if ENV['GITLAB_ROOT_PASSWORD']
+        gitlab_root_pwd = ENV['GITLAB_ROOT_PASSWORD']
+    else
+        gitlab_root_pwd = SecureRandom.urlsafe_base64
+    end
 end
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
@@ -47,7 +55,7 @@ include_recipe 'omnibus-gitlab::default'
 
 execute 'Reconfigure Gitlab' do
     command "gitlab-ctl reconfigure"
-    #not_if "gitlab-ctl status"
+    not_if "gitlab-ctl status"
     retries 5
     retry_delay 60
     notifies :run, 'execute[Restart Gitlab]', :immediately
