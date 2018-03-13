@@ -40,14 +40,14 @@ ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
 ENV['GITLAB_ROOT_PASSWORD'] = gitlab_root_pwd
 ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
 
-node.set['gitlab']['runner_token'] = gitlab_root_pwd
-node.set['gitlab']['gitlab_root_pwd'] = runner_token
+node.set['gitlab']['runner_token'] = runner_token
+node.set['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
 
 include_recipe 'omnibus-gitlab::default'
 
 execute 'Reconfigure Gitlab' do
     command "gitlab-ctl reconfigure"
-    not_if "gitlab-ctl status"
+    #not_if "gitlab-ctl status"
     retries 5
     retry_delay 60
     notifies :run, 'execute[Restart Gitlab]', :immediately
