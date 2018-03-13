@@ -27,8 +27,8 @@ default['omnibus-gitlab']['gitlab_rb']['nginx']['proxy_set_headers'] = {
 
 
 # SET RUNNER SETTINGS
-#node.default['gitlab-runner']['env']['CI_SERVER_URL'] = gitlab_server
-#node.default['gitlab-runner']['env']['REGISTRATION_TOKEN'] = gitlab_token
+#default['gitlab-runner']['env']['CI_SERVER_URL'] = gitlab_server
+#default['gitlab-runner']['env']['REGISTRATION_TOKEN'] = gitlab_token
 default['gitlab-runner']['env']['RUNNER_NAME'] = node['hostname']
 default['gitlab-runner']['env']['REGISTER_NON_INTERACTIVE'] = 'true' # DON'T CHANGE THIS
 
@@ -45,11 +45,11 @@ default['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 default['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
 
 # ONlY SET THESE IF NOTHING IS SET EXPLICITY
-if !attribute?('runner_token')
+if !node['gitlab'].has_key?('runner_token') or node['gitlab']['runner_token'].empty?
     puts "###################### Generating Runner Token ######################"
     override['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
 end
-if !attribute?('gitlab_root_pwd')
+if !node['gitlab'].has_key?('runner_token') or node['gitlab']['runner_token'].empty?
     puts "###################### Generating Root Password ######################"
     override['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
 end
