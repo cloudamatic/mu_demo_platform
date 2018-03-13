@@ -72,7 +72,9 @@ end
 
 		# LOOP THROUGH THE ENV ATTRIBUTES, and DROP THEM INTO ACTUAL ATTRIBUTE VARIABLES
 		node['gitlab-runner']['env'].each do |key, value|
-			ENV[key] = value
+			if !value.nil?
+				ENV[key] = value
+			end
 		end
 
 
