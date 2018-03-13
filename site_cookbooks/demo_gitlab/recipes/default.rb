@@ -46,6 +46,7 @@ ENV['GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN'] = runner_token
 
 node.normal['gitlab']['runner_token'] = runner_token
 node.normal['gitlab']['gitlab_root_pwd'] = gitlab_root_pwd
+node.save
 
 include_recipe 'omnibus-gitlab::default'
 
