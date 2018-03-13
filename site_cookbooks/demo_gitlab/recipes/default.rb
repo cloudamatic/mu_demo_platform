@@ -33,7 +33,6 @@ if !node['gitlab'].has_key?('gitlab_root_pwd') or node['gitlab']['gitlab_root_pw
 end
 puts "################### #{node['gitlab']}###################"
 
-
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
 ENV['GITLAB_RUNNER_ENDPOINT'] = node['gitlab']['runner_endpoint']
