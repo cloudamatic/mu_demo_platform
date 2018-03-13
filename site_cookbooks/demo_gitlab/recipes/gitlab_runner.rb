@@ -80,6 +80,7 @@ end
 			command "gitlab-runner register"
 			not_if "gitlab-runner verify -n #{node['hostname']}"
 			notifies :restart, 'service[gitlab-runner]', :delayed
+			ignore_failure true
 		end
 		
 	else

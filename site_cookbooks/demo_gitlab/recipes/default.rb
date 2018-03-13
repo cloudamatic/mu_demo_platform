@@ -19,19 +19,18 @@
 require 'securerandom'
 include_recipe 'chef-vault'
 
-puts "################### #{node['gitlab']}###################"
-
 node.override['gitlab']['is_server'] = true
 
-firewall 'default' do
-    action :nothing
+# ONlY SET THESE IF NOTHING IS SET EXPLICITY
+if !node['gitlab'].has_key?('runner_token') or node['gitlab']['runner_token'].empty?
+    node.default['gitlab']['runner_token'] = SecureRandom.urlsafe_base64
+end
+if !node['gitlab'].has_key?('gitlab_root_pwd') or node['gitlab']['gitlab_root_pwd'].empty?
+    node.default['gitlab']['gitlab_root_pwd'] = SecureRandom.urlsafe_base64
 end
 
-firewall_rule 'Open Gitlab Ports' do
-    port     [80, 8080]
-    command  :allow
-    notifies :restart, 'firewall[default]', :immediately
-end
+puts "################### #{node['gitlab']}###################"
+
 
 # SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 ENV['GITLAB_ENDPOINT'] = node['gitlab']['endpoint']
@@ -52,4 +51,12 @@ execute 'Restart Gitlab' do
     action :nothing
 end
 
+firewall 'default' do
+    action :nothing
+end
 
+firewall_rule 'Open Gitlab Ports' do
+    port     [80, 8080]
+    command  :allow
+    notifies :restart, 'firewall[default]', :immediately
+end
