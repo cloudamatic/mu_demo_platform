@@ -28,7 +28,7 @@ end
 	
 	execute 'Configure Repositories' do
 		command "curl -L #{script_url} | sudo bash"
-		not_if "gitlab-runner status"
+		#not_if "gitlab-runner status"
 	end
 	
 	package 'gitlab-runner' do
