@@ -1,4 +1,4 @@
-name 'demo_gitlab'
+name 'mu-demo-gitlab'
 maintainer 'eGlobalTech'
 maintainer_email 'eGTLabs@eglobaltech.com'
 license 'MIT'

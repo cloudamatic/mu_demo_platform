@@ -1,10 +1,17 @@
 ---
 appname: demo
+parameters:
+  - name: instance_type
+    required: true
+    default: t2.large
+  - name: vpc_id
+    required: true
+    default: vpc-4820b030
 loadbalancers:
 - name: gitlab-lb
   classic: true
   vpc:
-    vpc_id: vpc-4820b030
+    vpc_id: <%= vpc_id %>
   ingress_rules:
   - port: 443
     hosts:
@@ -28,6 +35,20 @@ loadbalancers:
     instance-port: 80
     instance-protocol: HTTP
     ssl-certificate-name: "*.egt-labs.com"
+databases:
+- name: gitlab-db
+  engine:
+  port:
+  size:
+  storage: 15
+  vpc: <%= vpc_id %>
+  identifier: "<%=$dbid%>"
+  auth_vault:
+    vault: "gitlab-db"
+    item: "credentials"
+  creation_style: 
+  create_read_replica: false
+
 servers:
   -
     name: gitlab-server
@@ -38,12 +59,12 @@ servers:
     skipinitialupdates: true
     loadbalancers:
     - concurrent-load-balancer: gitlab-lb
-    size: t2.large
+    size: <%= instance_type %>
     run_list:
-    - recipe[demo_gitlab]
-    - recipe[demo_gitlab::gitlab_runner]
+    - recipe[mu-demo-gitlab]
+    - recipe[mu-demo-gitlab::gitlab_runner]
     vpc:
-      vpc_id: vpc-4820b030
+      vpc_id: <%= vpc_id %>
       subnet_pref: private
     ingress_rules:
       -

@@ -1,9 +1,9 @@
-name 'demo_wordpress'
+name 'mu-demo-jenkins'
 maintainer 'eGlobalTech'
 maintainer_email 'eGTLabs@eglobaltech.com'
 license 'MIT'
-description 'Installs/Configures wordpress'
-long_description 'Installs/Configures wordpress'
+description 'Installs/Configures jenkins'
+long_description 'Installs/Configures jenkins'
 version '0.1.0'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 supports 'ubuntu'

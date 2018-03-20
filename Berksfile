@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 source 'https://supermarket.chef.io'
-local_cookbook_path = "cookbooks"
+cookbook_path = "cookbooks"
 
 metadata
 
 # Platform Cookbooks
-cookbook 'demo_gitlab', path: "#{mu_cookbook_path}/demo_gitlab"
-cookbook 'demo_jenkins', path: "#{mu_cookbook_path}/demo_jenkins"
-cookbook 'demo_wordpress', path: "#{mu_cookbook_path}/demo_wordpress"
-cookbook 'demo_elk_stack', path: "#{mu_cookbook_path}/demo_elk_stack"
+cookbook 'mu-demo-gitlab', path: "#{cookbook_path}/mu-demo-gitlab"
+cookbook 'mu-demo-jenkins', path: "#{cookbook_path}/mu-demo-jenkins"
+cookbook 'mu-demo-wordpress', path: "#{cookbook_path}/mu-demo-wordpress"
+cookbook 'mu-demo-elk_stack', path: "#{cookbook_path}/mu-demo-elk_stack"
 
 # Supermarket Cookbooks
 cookbook 'chef-vault', '~> 3.0.0'
