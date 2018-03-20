@@ -35,19 +35,19 @@ loadbalancers:
     instance-port: 80
     instance-protocol: HTTP
     ssl-certificate-name: "*.egt-labs.com"
-databases:
-- name: gitlab-db
-  engine:
-  port:
-  size:
-  storage: 15
-  vpc: <%= vpc_id %>
-  identifier: "<%=$dbid%>"
-  auth_vault:
-    vault: "gitlab-db"
-    item: "credentials"
-  creation_style: 
-  create_read_replica: false
+# databases:
+# - name: gitlab-db
+#   engine:
+#   port:
+#   size:
+#   storage: 15
+#   vpc: <%= vpc_id %>
+#   identifier: "<%=$dbid%>"
+#   auth_vault:
+#     vault: "gitlab-db"
+#     item: "credentials"
+#   creation_style: 
+#   create_read_replica: false
 
 servers:
   -
