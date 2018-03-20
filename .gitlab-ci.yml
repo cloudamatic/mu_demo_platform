@@ -20,6 +20,7 @@ Foodcritic:
   stage: Lint
   script:
     - foodcritic cookbooks/
+  allow_failure: true
 
 Berks:
   stage: Test
