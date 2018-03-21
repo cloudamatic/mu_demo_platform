@@ -1,0 +1,28 @@
+---
+appname: demo
+parameters:
+  - name: instance_type
+    required: true
+    default: t2.large
+  - name: vpc_id
+    required: true
+    default: vpc-4820b030
+servers:
+  -
+    name: broken-server
+    platform: centos7
+    storage:
+      -
+        size: 30
+    skipinitialupdates: true
+    size: <%= instance_type %>
+    run_list:
+    - recipe[mu-demo-broken]
+    vpc:
+      vpc_id: <%= vpc_id %>
+      subnet_pref: private
+    ingress_rules:
+      -
+        port: 80
+        hosts:          
+          - "0.0.0.0/0"

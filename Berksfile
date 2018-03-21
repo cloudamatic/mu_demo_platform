@@ -9,11 +9,13 @@ cookbook 'mu-demo-gitlab', path: "#{cookbook_path}/mu-demo-gitlab"
 cookbook 'mu-demo-jenkins', path: "#{cookbook_path}/mu-demo-jenkins"
 cookbook 'mu-demo-wordpress', path: "#{cookbook_path}/mu-demo-wordpress"
 cookbook 'mu-demo-elk_stack', path: "#{cookbook_path}/mu-demo-elk_stack"
+cookbook 'mu-demo-broken', path: "#{cookbook_path}/mu-demo-broken"
 
 # Supermarket Cookbooks
 cookbook 'chef-vault', '~> 3.0.0'
 cookbook 'docker', '~> 4.0.1'
 cookbook 'firewall', '~> 2.6.3'
+cookbook 'apache2', '~> 5.0.1'
 
 # Gitlab Cookbooks
 cookbook 'omnibus-gitlab', '~> 0.4.2', git: 'http://ec2-34-200-91-90.compute-1.amazonaws.com/ryan.bolyard/cookbook-omnibus-gitlab.git'
