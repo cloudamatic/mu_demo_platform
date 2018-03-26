@@ -16,6 +16,6 @@ source_url 'https://github.com/cloudamatic/mu'
 
 
 depends 'chef-vault', '~> 3.0.0'
-depends 'omnibus-gitlab', '~> 0.4.2'
-depends 'docker', '~> 4.0.1'
-depends 'firewall', '~> 2.6.3'
+depends 'omnibus-gitlab'
+depends 'docker'
+depends 'firewall'
