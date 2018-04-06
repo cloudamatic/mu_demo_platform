@@ -15,12 +15,7 @@ issues_url 'https://github.com/cloudamatic/mu/issues'
 source_url 'https://github.com/cloudamatic/mu'
 
 
-<<<<<<< HEAD
-depends 'chef-vault'
-depends 'omnibus-gitlab', '~> 0.4.2'
-=======
 depends 'chef-vault', '~> 3.0.0'
 depends 'omnibus-gitlab'
->>>>>>> 13c428d776c314304d161dfc42b3d33830699a1e
 depends 'docker'
 depends 'firewall'
