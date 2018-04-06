@@ -26,16 +26,15 @@ default['omnibus-gitlab']['gitlab_rb']['gitlab_rails']['backup_path'] = "/var/op
 # SET RUNNER SETTINGS
 normal['gitlab-runner']['env']['RUNNER_NAME'] = node['hostname']
 normal['gitlab-runner']['env']['REGISTER_NON_INTERACTIVE'] = 'true' # DON'T CHANGE THIS
-normal['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker' #SET RUNNER EXECUTOR
-
-# CONFIGURE DOCKER SETTINGS
-normal['gitlab-runner']['env']['DOCKER_IMAGE'] = 'ubuntu'
+normal['gitlab-runner']['env']['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname']}, #{node['platform_family']}"
 normal['gitlab-runner']['env']['REGISTER_LOCKED'] = 'false'
-normal['gitlab-runner']['env']['REGISTER_RUN_UNTAGGED'] = 'true'
-normal['gitlab-runner']['env']['RUNNER_TAG_LIST'] = "mu-node, #{node['hostname']}, #{node['platform_family']}, docker"
+normal['gitlab-runner']['env']['REGISTER_RUN_UNTAGGED'] = 'false'
 normal['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 normal['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
 
+default['gitlab-runner']['env']['RUNNER_EXECUTOR'] == 'docker'
+default['gitlab-runner']['env']['WINDOWS_INSTALL_DIR'] = '/gitlab-runner'
+default['gitlab-runner']['env']['WINDOWS_DOWNLOAD_URL'] = 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-windows-amd64.exe'
 
 
 
