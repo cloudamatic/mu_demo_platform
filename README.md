@@ -7,9 +7,13 @@ This repository contains demos Baskets of Kitten's (BoK's) for [Cloudamatic's **
 
 Please see [`/applications/README.md`](./applications/README.md) for more information about the demos that are currently avaiable.
 
-## Applications
+## Framework
 `/applications` contains the BoK yaml files that ***mu*** uses to provision new servers, and to define the other resources necicary for application deployments.
 
 `/cookbooks` contains the cookbooks that install the actual demo applications on the virtual servers.
+
+`/databags` contains Chef data_bags that are needed for the applications.
+
+`/roles` contains Chef roles that are needed for the applications.
 
 `/utils` contains other utilities that are helpful for deployments and machine maintance.
