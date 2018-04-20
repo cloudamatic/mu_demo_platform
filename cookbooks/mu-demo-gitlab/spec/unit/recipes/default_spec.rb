@@ -16,6 +16,7 @@ describe 'mu-demo-gitlab::default' do
     end
 
     it 'converges successfully' do
+      stub_command("gitlab-ctl status").and_return(true)
       expect { chef_run }.to_not raise_error
     end
   end
@@ -29,6 +30,7 @@ describe 'mu-demo-gitlab::default' do
     end
 
     it 'converges successfully' do
+      stub_command("gitlab-ctl status").and_return(true)
       expect { chef_run }.to_not raise_error
     end
   end
