@@ -49,6 +49,6 @@ ChefSpec:
 BoK Dry Run:
   stage: Smoke Test
   script:
-    - for bok in applications/*.y*l ; do (mu-deploy -d $bok); done
+    - for bok in applications/*.y*l ; do (echo $bok && mu-deploy -d $bok); done
   tags: 
     - mu-master
