@@ -3,6 +3,7 @@ image: chef/chefdk:latest
 stages:
   - Lint
   - Test
+  - Smoke Test
   - Merge
   - Deploy
   
