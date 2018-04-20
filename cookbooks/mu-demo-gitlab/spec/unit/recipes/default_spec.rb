@@ -1,12 +1,12 @@
 #
-# Cookbook:: demo_gitlab
+# Cookbook:: mu-demo_gitlab
 # Spec:: default
 #
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
 require 'spec_helper'
 
-describe 'demo_gitlab::default' do
+describe 'mu-demo-gitlab::default' do
   context 'When all attributes are default, on Ubuntu 16.04' do
     let(:chef_run) do
       # for a complete list of available platforms and versions see:
@@ -16,6 +16,7 @@ describe 'demo_gitlab::default' do
     end
 
     it 'converges successfully' do
+      stub_command("gitlab-ctl status").and_return(true)
       expect { chef_run }.to_not raise_error
     end
   end
@@ -29,6 +30,7 @@ describe 'demo_gitlab::default' do
     end
 
     it 'converges successfully' do
+      stub_command("gitlab-ctl status").and_return(true)
       expect { chef_run }.to_not raise_error
     end
   end
