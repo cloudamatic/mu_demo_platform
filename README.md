@@ -1,6 +1,9 @@
 # Mu Demo Platform
 
-[![pipeline status](https://gitlab.com/cloudamatic/mu_demo_platform/badges/master/pipeline.svg)](https://gitlab.com/cloudamatic/mu_demo_platform/commits/master)[![coverage report](https://gitlab.com/cloudamatic/mu_demo_platform/badges/master/coverage.svg)](https://gitlab.com/cloudamatic/mu_demo_platform/commits/master) [![Maintainability](https://api.codeclimate.com/v1/badges/9bdfaf3844413c136ad7/maintainability)](https://codeclimate.com/github/cloudamatic/mu_demo_platform/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/9bdfaf3844413c136ad7/test_coverage)](https://codeclimate.com/github/cloudamatic/mu_demo_platform/test_coverage)
+
+[![pipeline status](https://gitlab.com/cloudamatic/mu_demo_platform/badges/master/pipeline.svg)](https://gitlab.com/cloudamatic/mu_demo_platform/commits/master)
+[![coverage report](https://gitlab.com/cloudamatic/mu_demo_platform/badges/master/coverage.svg)](https://gitlab.com/cloudamatic/mu_demo_platform/commits/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9bdfaf3844413c136ad7/maintainability)](https://codeclimate.com/github/cloudamatic/mu_demo_platform/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/9bdfaf3844413c136ad7/test_coverage)](https://codeclimate.com/github/cloudamatic/mu_demo_platform/test_coverage)
 
 This repository contains demos Baskets of Kitten's (BoK's) for [Cloudamatic's ***mu***](https://github.com/cloudamatic/mu).
 
