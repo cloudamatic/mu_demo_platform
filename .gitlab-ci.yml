@@ -42,7 +42,6 @@ ChefSpec:
   stage: Test
   script:
     - for d in ./cookbooks/*/ ; do (echo "Testing $d" && cd "$d" && chef exec rspec --color -fd); done
-  allow_failure: true
 
 BoK Dry Run:
   stage: Smoke Test
