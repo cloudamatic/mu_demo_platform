@@ -32,7 +32,7 @@ normal['gitlab-runner']['env']['REGISTER_RUN_UNTAGGED'] = 'false'
 normal['gitlab-runner']['env']['RUNNER_REQUEST_CONCURRENCY'] = '100'
 normal['gitlab-runner']['env']['RUNNER_LIMIT'] = '99'
 
-default['gitlab-runner']['env']['RUNNER_EXECUTOR'] == 'docker'
+default['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker'
 default['gitlab-runner']['env']['WINDOWS_INSTALL_DIR'] = '/gitlab-runner'
 default['gitlab-runner']['env']['WINDOWS_DOWNLOAD_URL'] = 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-windows-amd64.exe'
 

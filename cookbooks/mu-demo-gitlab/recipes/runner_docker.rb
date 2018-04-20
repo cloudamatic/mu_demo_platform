@@ -3,7 +3,7 @@ node.override['gitlab-runner']['env']['RUNNER_EXECUTOR'] = 'docker' #SET RUNNER 
 node.override['gitlab-runner']['env']['DOCKER_IMAGE'] = 'ubuntu'
 node.override['gitlab-runner']['env']['RUNNER_TAG_LIST'] = node['gitlab-runner']['env']['RUNNER_TAG_LIST'].concat(", docker")
 
-include_recipe 'femadata-gitlab::gitlab_runner'
+include_recipe 'mu-demo-gitlab::gitlab_runner'
 
 package 'docker-io' do
 	action :upgrade
