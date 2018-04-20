@@ -41,7 +41,8 @@ Old_Berks:
 ChefSpec:
   stage: Test
   script:
-    - for d in ./cookbooks/*/ ; do (echo "Testing $d" && cd "$d" && chef exec rspec --color -fd); done
+    - chef gem install docker-api --version '= 1.34.0'
+    - for d in ./cookbooks/*/ ; do (echo "Testing $d" && cd "$d" && chef exec rspec --force-color -fd); done
 
 BoK Dry Run:
   stage: Smoke Test
