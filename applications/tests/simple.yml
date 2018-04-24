@@ -6,15 +6,15 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-  servers: 
-    - 
-      name: simple
-      platform: centos7
-      size: <%= instance_type %>
-      skipinitialupdates: true
-      storage:
-      - device: /dev/xvdg
-        size: 500
-        volume_type: sc1
+servers: 
+  - 
+    name: simple
+    platform: centos7
+    size: <%= instance_type %>
+    skipinitialupdates: true
+    storage:
+    - device: /dev/xvdg
+      size: 500
+      volume_type: sc1
 
 <%= include("ElasticSearch/simple.yml") %>
