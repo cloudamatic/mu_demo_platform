@@ -22,5 +22,5 @@ servers:
 # <% if complexity == 'complex' %>
 #   <%= include("./ElasticSearch/complex.yml") %>
 # <% else %>
-  <%= include("./ElasticSearch/simple.yml") %>
+<%= include("./ElasticSearch/simple.yml") %>
 # <% end %>
