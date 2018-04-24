@@ -1,5 +1,5 @@
 ---
-appname: superSimpleBoK
+appname: superBoK
 parameters:
   - name: complexity
     default: simple
@@ -8,14 +8,6 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-<% if complexity == 'complex' %>
-<%= include("./Servers/complex.yml") %>
-<% else %>
 <%= include("./Servers/simple.yml") %>
-<% end %>
 
-<% if complexity == 'complex' %>
-<%= include("./ElasticSearch/complex.yml") %>
-<% else %>
-<%= include("./ElasticSearch/simple.yml") %>
-<% end %>
+<%= include("./ElasticSearch/ElasticSearch.yml") %>

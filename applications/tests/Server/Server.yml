@@ -1,0 +1,29 @@
+<% if complexity == 'complex' %>
+servers: 
+  - 
+    name: simple
+    platform: centos7
+    size: <%= instance_type %>
+    skipinitialupdates: true
+    vpc:
+      vpc_id: <%= vpc %>
+      subnet_pref: public
+    storage:
+    - device: /dev/xvdg
+      size: 500
+      volume_type: sc1
+<% else %>
+servers: 
+  - 
+    name: simple
+    platform: centos7
+    size: <%= instance_type %>
+    skipinitialupdates: true
+    vpc:
+      vpc_id: <%= vpc %>
+      subnet_pref: public
+    storage:
+    - device: /dev/xvdg
+      size: 500
+      volume_type: sc1
+<% end %>
