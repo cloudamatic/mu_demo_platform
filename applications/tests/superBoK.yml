@@ -1,6 +1,8 @@
 ---
 appname: superSimpleBoK
 parameters:
+  - name: complexity
+    default: simple
   - name: vpc_name
     required: false
   - name: instance_type
@@ -16,5 +18,9 @@ servers:
     - device: /dev/xvdg
       size: 500
       volume_type: sc1
-      
-<%= include "./ElasticSearch/simple.yml" %>
+
+<% if complexity == 'complex' %>
+  <%= include("./ElasticSearch/complex.yml") %>
+<% else %>
+  <%= include("./ElasticSearch/simple.yml") %>
+<% end %>
