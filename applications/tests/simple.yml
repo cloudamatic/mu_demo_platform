@@ -17,4 +17,4 @@ servers:
       size: 500
       volume_type: sc1
 
-<%= include("ElasticSearch/simple.yml") %>
+<%= include "./ElasticSearch/simple.yml" %>
