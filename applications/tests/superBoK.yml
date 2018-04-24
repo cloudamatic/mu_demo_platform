@@ -8,16 +8,11 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-servers: 
-  - 
-    name: simple
-    platform: centos7
-    size: <%= instance_type %>
-    skipinitialupdates: true
-    storage:
-    - device: /dev/xvdg
-      size: 500
-      volume_type: sc1
+<% if complexity == 'complex' %>
+<%= include("./Servers/complex.yml") %>
+<% else %>
+<%= include("./Servers/simple.yml") %>
+<% end %>
 
 <% if complexity == 'complex' %>
 <%= include("./ElasticSearch/complex.yml") %>
