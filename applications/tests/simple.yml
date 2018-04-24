@@ -1,0 +1,9 @@
+---
+appname: superSimpleBoK
+parameters:
+  - name: vpc_name
+    required: false
+  - name: instance_type
+    default: t2.medium
+
+<%= include("ElasticSearch/simple.yml") %>
