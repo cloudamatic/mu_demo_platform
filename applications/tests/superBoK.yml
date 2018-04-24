@@ -19,8 +19,8 @@ servers:
       size: 500
       volume_type: sc1
 
-<% if complexity == 'complex' %>
-  <%= include("./ElasticSearch/complex.yml") %>
-<% else %>
+# <% if complexity == 'complex' %>
+#   <%= include("./ElasticSearch/complex.yml") %>
+# <% else %>
   <%= include("./ElasticSearch/simple.yml") %>
-<% end %>
+# <% end %>
