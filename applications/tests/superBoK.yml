@@ -10,7 +10,7 @@ parameters:
 
 servers: 
 - 
-  name: test
+  name: <%= include("test") %>
   size: <%= instance_type %>
 <%= include("./server/server.yml") %>
 
