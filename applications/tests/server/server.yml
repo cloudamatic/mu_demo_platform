@@ -1,5 +1,4 @@
 <% if complexity == 'complex' %>
-servers: 
   - 
     name: server-complex
     platform: centos7
@@ -13,7 +12,6 @@ servers:
       size: 500
       volume_type: sc1
 <% else %>
-servers: 
   - 
     name: server-simple
     size: <%= instance_type %>
