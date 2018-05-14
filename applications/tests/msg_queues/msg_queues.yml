@@ -1,0 +1,6 @@
+<% if $complexity == 'complex' %>
+name: <%= queues_name %>
+# TODO: BUILD OUT COMPLEX EXAMPLE
+<% else %>
+name: <%= queues_name %>
+<% end %>

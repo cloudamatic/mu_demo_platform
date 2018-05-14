@@ -11,6 +11,8 @@ parameters:
     default: superBoK_VPC
   - name: logs_name
     default: superBoK_logs
+  - name: queues_name
+    default: superBoK_queues
 
 <% $complexity = "complex" %>
 
@@ -26,3 +28,6 @@ servers:
 search_domains:
 -
   <%= include("./search_domains/search_domains.yml") %>
+msg_queues:
+-
+  <%= include("./msg_queues/msg_queues.yml") %>
