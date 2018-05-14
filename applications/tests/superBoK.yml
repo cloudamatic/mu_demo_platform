@@ -9,8 +9,5 @@ parameters:
     default: t2.medium
 
 servers: 
-- 
-  name: <%= include("test") %>
-  size: <%= instance_type %>
 -
   <%= include("./server/server.yml") %>
