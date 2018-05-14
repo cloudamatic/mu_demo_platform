@@ -1,2 +1,2 @@
 name: server-simple
-size: t2.medium
+size: <%= instance_type %>
