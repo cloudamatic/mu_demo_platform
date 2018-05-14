@@ -15,7 +15,7 @@ cognito:
   user_pool_id: "us-east-1_eSwWA1VYQ"
 slow_logs: MY-INDEXERS-ARE-SLOW-TELL-CLOUDWATCH
 vpc:
-  vpc_name: vpc
+  vpc_name: <%= superBoK_VPC %>
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
 name: search_domain-simple
 instance_type: t2.small.elasticsearch

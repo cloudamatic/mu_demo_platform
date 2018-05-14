@@ -1,0 +1,6 @@
+<% if $complexity == 'complex' %>
+name: <%= superBoK_VPC %>
+# TODO: BUILD OUT COMPLEX EXAMPLE
+<% else %>
+name: <%= superBoK_VPC %>
+<% end %>

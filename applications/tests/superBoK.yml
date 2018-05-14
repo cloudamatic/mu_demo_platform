@@ -7,12 +7,17 @@ parameters:
     required: false
   - name: instance_type
     default: t2.medium
+  - name: vpc_name
+  default: superBoK_VPC
 
 <% $complexity = "complex" %>
+vpc:
+  -
+  <%= include("./vpcs/vpcs.yml") %>
 servers:
 -
-  <%= include("./server/server.yml") %>
+  <%= include("./servers/servers.yml") %>
 
 search_domains:
 -
-  <%= include("./search_domain/search_domain.yml") %>
+  <%= include("./search_domains/search_domains.yml") %>
