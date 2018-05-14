@@ -17,12 +17,12 @@ parameters:
 vpcs:
 -
   <%= include("./vpcs/vpcs.yml") %>
+logs:
+-
+ <%= include("./logs/logs.yml") %> 
 servers:
 -
   <%= include("./servers/servers.yml") %>
 search_domains:
 -
   <%= include("./search_domains/search_domains.yml") %>
-logs:
--
- <%= include("./logs/logs.yml") %> 
