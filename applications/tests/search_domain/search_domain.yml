@@ -1,6 +1,6 @@
 <% if $complexity == "complex" %>
 name: search_domain-complex
-instance_type: t2.small.elasticsearch
+instance_type: t2.large.elasticsearch
 instance_count: 3
 dedicated_masters: 1
 master_instance_type: t2.medium.elasticsearch
@@ -13,7 +13,7 @@ advanced_options:
 cognito:
   identity_pool_id: "us-east-1:69e2223c-2c74-42ca-9b27-1037fcb60b87"
   user_pool_id: "us-east-1_eSwWA1VYQ"
-index_slow_logs: MY-INDEXERS-ARE-SLOW-TELL-CLOUDWATCH
+slow_logs: MY-INDEXERS-ARE-SLOW-TELL-CLOUDWATCH
 vpc:
   vpc_name: vpc
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
