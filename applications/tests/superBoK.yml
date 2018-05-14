@@ -9,6 +9,7 @@ parameters:
     default: t2.medium
 
 <% $complexity = "complex" %>
+servers:
 -
   <%= include("./server/server.yml") %>
 
