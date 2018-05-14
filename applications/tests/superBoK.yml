@@ -12,7 +12,7 @@ servers:
 -
   <%= include("./server/server.yml") %>
 search_domains:
-<%= if $complexity == 'complex' then %>
+<% if $complexity == "complex" then %>
 - 
   name: search_domain-complex
   instance_type: t2.small.elasticsearch
