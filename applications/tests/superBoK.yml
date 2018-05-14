@@ -8,12 +8,6 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-servers: 
-  - 
-    name: simple
-    size: <%= instance_type %>
-    skipinitialupdates: true
+<%= include("./Server/Server.yaml") %>
 
-<%= include("./Server/Server.yml") %>
-
-<%= include("./ElasticSearch/ElasticSearch.yml") %>
+<%= include("./ElasticSearch/ElasticSearch.yaml") %>
