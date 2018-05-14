@@ -8,11 +8,11 @@ parameters:
   - name: instance_type
     default: t2.medium
   - name: vpc_name
-  default: superBoK_VPC
+    default: superBoK_VPC
 
 <% $complexity = "complex" %>
-vpc:
-  -
+vpcs:
+-
   <%= include("./vpcs/vpcs.yml") %>
 servers:
 -
