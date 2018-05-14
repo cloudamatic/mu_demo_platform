@@ -8,6 +8,6 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-<%= include("Server.yaml") %>
+<%= include("./server/server.yml") %>
 
-<%= include("ElasticSearch.yaml") %>
+<%= include("./search_domain/search_domain.yml") %>
