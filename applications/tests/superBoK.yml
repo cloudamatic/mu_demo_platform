@@ -13,6 +13,3 @@ servers:
   name: <%= include("test") %>
   size: <%= instance_type %>
 <%= include("./server/server.yml") %>
-
-# search_domains:
-# <%= include("./search_domain/search_domain.yml") %>
