@@ -15,4 +15,4 @@ servers:
 
 search_domains:
 -
-  <%= include("./serach_domain/search_domain.yml") %>
+  <%= include("./search_domain/search_domain.yml") %>
