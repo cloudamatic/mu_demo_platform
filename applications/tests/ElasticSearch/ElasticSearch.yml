@@ -1,7 +1,7 @@
-<% if complexity == 'complex' %>
 search_domains:
-- name: testcomplex
-  instance_type: t2.large.elasticsearch
+- name: test
+  instance_type: t2.small.elasticsearch
+  <% if complexity == 'complex' %>
   instance_count: 3
   dedicated_masters: 1
   master_instance_type: t2.medium.elasticsearch
@@ -17,8 +17,4 @@ search_domains:
   index_slow_logs: MY-INDEXERS-ARE-SLOW-TELL-CLOUDWATCH
   vpc:
     vpc_name: vpc
-<% else %>
-search_domains:
-- name: test
-  instance_type: t2.small.elasticsearch
-<% end %>
+  <% end %>

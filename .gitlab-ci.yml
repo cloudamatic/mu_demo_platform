@@ -44,6 +44,13 @@ ChefSpec:
     - chef gem install docker-api --version '= 1.34.0'
     - for d in ./cookbooks/*/ ; do (echo "${bold}Testing $d$\n{normal}" && cd "$d" && chef exec rspec --force-color -fd); done
 
+Config Parser Smoke Test:
+  stage: Smoke Test
+  script:
+    - mu-deploy -d ./applications/test/superBoK.yml
+  tags: 
+    - mu-master
+
 BoK Dry Run:
   stage: Smoke Test
   script:
