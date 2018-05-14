@@ -2,7 +2,7 @@
 appname: superBoK
 parameters:
   - name: complexity
-    default: simple
+    default: complex
   - name: vpc_name
     required: false
   - name: instance_type
