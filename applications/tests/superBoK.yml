@@ -8,12 +8,16 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-servers: 
+servers:
+-
+  name: test-<%= complexity %>
+  size: <%= instance_type %>
 -
   <%= include("./server/server.yml") %>
+
 search_domains:
+-
 <% if $complexity == "complex" then %>
-- 
   name: search_domain-complex
   instance_type: t2.small.elasticsearch
   instance_count: 3
@@ -32,7 +36,6 @@ search_domains:
   vpc:
     vpc_name: vpc
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
-- 
   name: search_domain-simple
   instance_type: t2.small.elasticsearch
 <% end %>
