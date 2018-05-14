@@ -1,2 +1,7 @@
+<% if complexity == 'complex' %>
+name: server-complex
+size: <%= instance_type %>
+<% else %>
 name: server-simple
 size: <%= instance_type %>
+<% end %>
