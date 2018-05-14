@@ -1,18 +1,3 @@
-<% if complexity == 'complex' %>
-- 
-  name: server-complex
-  platform: centos7
-  size: <%= instance_type %>
-  skipinitialupdates: true
-  vpc:
-    vpc_id: <%= vpc %>
-    subnet_pref: public
-  storage:
-  - device: /dev/xvdg
-    size: 500
-    volume_type: sc1
-<% else %>
 - 
   name: server-simple
-  size: <%= instance_type %>
-<% end %>
+  size: t2.medium
