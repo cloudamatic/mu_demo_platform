@@ -23,11 +23,10 @@ logs:
 -
  <%= include("./logs/logs.yml") %> 
 servers:
--
-  <%= include("./servers/servers.yml") %>
+<%= include("./servers/servers.yml") %>
 search_domains:
 -
   <%= include("./search_domains/search_domains.yml") %>
-msg_queues:
--
-  <%= include("./msg_queues/msg_queues.yml") %>
+# msg_queues:
+# -
+#   <%= include("./msg_queues/msg_queues.yml") %>
