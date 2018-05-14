@@ -8,11 +8,11 @@ parameters:
   - name: instance_type
     default: t2.medium
 
-servers: 
-- 
-  name: test
-  size: <%= instance_type %>
-<%= include("./server/server.yml") %>
+# servers: 
+# - 
+#   name: test
+#   size: <%= instance_type %>
+# <%= include("./server/server.yml") %>
 
 search_domains:
 <%= include("./search_domain/search_domain.yml") %>
