@@ -1,6 +1,9 @@
 <% if $complexity == 'complex' %>
 name: <%= queues_name %>
-# TODO: BUILD OUT COMPLEX EXAMPLE
+visibility_timeout: "1 hour"
+failqueue:
+  create: true
+  retries_before_fail: 5
 <% else %>
 name: <%= queues_name %>
 <% end %>

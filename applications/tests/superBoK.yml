@@ -14,7 +14,7 @@ parameters:
   - name: queues_name
     default: superBoK_queues
 
-<% $complexity = "complex" %>
+<% $complexity = "simple" %>
 
 vpcs:
 -
