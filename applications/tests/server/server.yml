@@ -2,7 +2,7 @@
 - 
   name: server-complex
   platform: centos7
-  size: t2.medium
+  size: <%= instance_type %>
   skipinitialupdates: true
   vpc:
     vpc_id: <%= vpc %>
@@ -14,5 +14,5 @@
 <% else %>
 - 
   name: server-simple
-  size: t2.medium
+  size: <%= instance_type %>
 <% end %>
