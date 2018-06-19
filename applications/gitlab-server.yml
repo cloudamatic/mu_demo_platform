@@ -4,9 +4,13 @@ parameters:
   - name: instance_type
     required: true
     default: t2.large
+  # - name: vpc_id
+  #   required: true
+  #   default: vpc-4820b030
   - name: vpc_id
+    cloudtype: AWS::EC2::VPC::Id
     required: true
-    default: vpc-4820b030
+    default: <%= MU.myVPC %>
 loadbalancers:
 - name: gitlab-lb
   classic: true
