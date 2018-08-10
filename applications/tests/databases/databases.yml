@@ -1,14 +1,14 @@
 <% if $complexity == "complex" %>
 
 name: database-complex
-size: db.t2.small
+size: <%= db_size %>
 engine: postgres
 storage: 5
 
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
 
 name: database-simple
-size: db.t2.small
+size: <%= db_size %>
 engine: postgres
 storage: 5
 
