@@ -16,6 +16,8 @@ parameters:
   - name: queues_name
     default: superBoK_queues
 
+<% $complexity = 'complex' %>
+
 vpcs:
 -
   <%= include("./vpcs/vpcs.yml") %>
