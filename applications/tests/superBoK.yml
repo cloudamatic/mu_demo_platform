@@ -28,6 +28,11 @@ servers:
 search_domains:
 -
   <%= include("./search_domains/search_domains.yml") %>
+
+databases:
+-
+  <%= include("./databases/databases.yml") %>
+  
 # msg_queues:
 # -
 #   <%= include("./msg_queues/msg_queues.yml") %>
