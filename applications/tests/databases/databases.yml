@@ -3,7 +3,20 @@
 name: database-complex
 size: <%= db_size %>
 engine: postgres
+engine_version: 9.6.6
 storage: 5
+add_cluster_node: true
+allow_major_version_upgrade: true
+auto_minor_version_upgrade: false
+backup_retention_period: 10
+cluster_node_count: 2
+create_cluster: true
+create_read_replica: true
+master_user: Bob
+multi_az_on_create: true
+prefered_backup_window: 03:00-03:30
+publicaly_accessible: true
+region: us-west-2
 
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
 
