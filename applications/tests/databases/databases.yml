@@ -3,11 +3,13 @@
 name: database-complex
 size: db.t2.small
 engine: postgres
+storage: 5
 
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
 
 name: database-simple
 size: db.t2.small
 engine: postgres
+storage: 5
 
 <% end %>
