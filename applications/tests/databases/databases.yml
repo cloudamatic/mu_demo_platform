@@ -14,8 +14,6 @@ create_cluster: true
 create_read_replica: true
 master_user: Bob
 multi_az_on_create: true
-prefered_backup_window: 03:00-03:30
-publicaly_accessible: true
 region: us-west-2
 
 <% else %> # IF NOT COMPLEX THEN ASSUME SIMPLE
