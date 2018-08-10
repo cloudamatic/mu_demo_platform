@@ -3,12 +3,18 @@ appname: superBoK
 parameters:
   - name: complexity
     default: complex
-
-<% $instance_type = "t2.medium" %>
-<% $db_size = "db.t2.small" %>
-<% $vpc_name = "superBoK_VPC" %>
-<% $logs_name = "superBoK_logs" %>
-<% $queues_name = "superBoK_queues" %>
+  - name: vpc_name
+    required: false
+  - name: instance_type
+    default: t2.medium
+  - name: db_size
+    default: db.t2.small
+  - name: vpc_name
+    default: superBoK_VPC
+  - name: logs_name
+    default: superBoK_logs
+  - name: queues_name
+    default: superBoK_queues
 
 vpcs:
 -
