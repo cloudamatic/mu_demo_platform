@@ -19,4 +19,3 @@
       vpc:
         vpc_id: <%= vpc %>
         subnet_pref: public
-      storage:
