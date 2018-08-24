@@ -18,7 +18,7 @@ execute 'Install Mu' do
 	live_stream true
 end
 
-execute 'Install Mu' do
+execute 'Configure Mu' do
 	command "/opt/mu/bin/mu-configure -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
 	live_stream true
 end
