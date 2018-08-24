@@ -11,7 +11,7 @@ remote_file 'Download Mu Installer' do
 	action :create
 end
 
-hostname = node['ec2']['public_hostname'] ? node['ec2']['private_dns_name']
+hostname = node['ec2']['public_hostname'] || node['ec2']['private_dns_name']
 
 execute 'Install Mu' do
 	command "#{Chef::Config[:file_cache_path]}/installer -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
