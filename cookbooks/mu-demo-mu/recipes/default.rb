@@ -20,7 +20,7 @@ end
 
 execute 'Install Mu' do
 	command "/opt/mu/bin/mu-configure -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
-	live_stream True
+	live_stream true
 end
 
 # execute 'create_user' do
