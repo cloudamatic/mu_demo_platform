@@ -12,7 +12,7 @@ remote_file 'Download Mu Installer' do
 end
 
 execute 'Install Mu' do
-	command "#{Chef::Config[:file_cache_path]}/installer -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{node['ipaddress']p}"
+	command "#{Chef::Config[:file_cache_path]}/installer -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{node['ipaddress']}"
 end
 
 # execute 'create_user' do
