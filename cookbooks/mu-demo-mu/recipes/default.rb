@@ -15,7 +15,7 @@ hostname = node['ec2']['public_hostname'] || node['ec2']['private_dns_name']
 
 execute 'Install Mu' do
 	command "/opt/chef/bin/chef-apply #{Chef::Config[:file_cache_path]}/init.rb -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
-	live_stream True
+	live_stream true
 end
 
 # execute 'Install Mu' do
