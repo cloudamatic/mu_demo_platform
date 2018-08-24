@@ -5,8 +5,8 @@
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
 remote_file 'Download Mu Installer' do
-	source 'https://raw.githubusercontent.com/cloudamatic/mu/master/install/installer'
-	path "#{Chef::Config[:file_cache_path]}/installer"
+	source 'https://raw.githubusercontent.com/cloudamatic/mu/master/cookbooks/mu-master/recipes/init.rb'
+	path "#{Chef::Config[:file_cache_path]}/installer.rb"
 	mode '0755'
 	action :create
 end
@@ -14,9 +14,14 @@ end
 hostname = node['ec2']['public_hostname'] || node['ec2']['private_dns_name']
 
 execute 'Install Mu' do
-	command "#{Chef::Config[:file_cache_path]}/installer -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
+	command "/opt/chef/bin/chef-apply #{Chef::Config[:file_cache_path]}/init.rb -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
 	live_stream True
 end
+
+# execute 'Install Mu' do
+# 	command "#{Chef::Config[:file_cache_path]}/installer -n -m mu@egt-labs.com -u 'mu master' -h #{node['hostname']} -p #{hostname}"
+# 	live_stream True
+# end
 
 # execute 'create_user' do
 # 	command <<-EOH
