@@ -9,6 +9,7 @@ cookbook 'mu-demo-gitlab', path: "#{cookbook_path}/mu-demo-gitlab"
 cookbook 'mu-demo-jenkins', path: "#{cookbook_path}/mu-demo-jenkins"
 cookbook 'mu-demo-wordpress', path: "#{cookbook_path}/mu-demo-wordpress"
 cookbook 'mu-demo-elk_stack', path: "#{cookbook_path}/mu-demo-elk_stack"
+cookbook 'mu-demo-mu', path: "#{cookbook_path}/mu-demo-mu"
 
 # Supermarket Cookbooks
 cookbook 'chef-vault', '~> 3.0.0'

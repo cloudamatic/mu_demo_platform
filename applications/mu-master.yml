@@ -1,0 +1,22 @@
+---
+  parameters:
+  - name: appname
+    default: demo
+  - name: instance_type
+    default: t3.medium
+  - name: vpc
+    cloudtype: AWS::EC2::VPC::Id
+    default: <%= MU.myVPC %>
+  appname: <%= appname %>
+  servers: 
+    - 
+      name: mu-master
+      platform: centos7
+      size: <%= instance_type %>
+      run_list:
+      - recipe[mu-demo-mu]
+      skipinitialupdates: true
+      vpc:
+        vpc_id: <%= vpc %>
+        subnet_pref: public
+      storage:
