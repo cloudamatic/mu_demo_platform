@@ -16,6 +16,7 @@
       ami_id: ami-9887c6e7
       ssh_user: centos
       run_list:
+      - recipe[mu-master]
       - recipe[mu-demo-mu]
       skipinitialupdates: true
       static_ip:
