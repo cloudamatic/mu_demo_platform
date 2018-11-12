@@ -1,0 +1,79 @@
+---
+  appname: origin
+  vpcs:
+  - name: vpc
+    ip_block: 10.90.0.0/16
+    create_nat_gateway: true
+    peers:
+    - vpc:
+        vpc_id: <%= MU.myVPC %>
+    route-tables:
+    - name: internet
+      routes:
+      - destination_network: 0.0.0.0/0
+        gateway: "#INTERNET"
+    - name: private
+      routes:
+      - destination_network: 0.0.0.0/0
+        gateway: "#NAT"
+  servers:
+  - name: master
+    ssh_user: ec2-user
+    platform: rhel7
+    ami_id: ami-a8d369c0
+    size: t2.large
+    vpc:
+      vpc_name: vpc
+    ingress_rules:
+    - port_range: "1-65535"
+      proto: tcp
+      sgs:
+      - server_poolworkers
+    - port_range: "1-65535"
+      proto: udp
+      sgs:
+      - server_poolworkers
+    vault_access:
+    - vault: openshift-origin-ssh
+      item: private
+    - vault: openshift-origin-ssh
+      item: public
+    - vault: mu_ldap
+      item: mu_bind_acct
+    run_list:
+    - "recipe[mu-tools::split_var_partitions]"
+    - "recipe[mu-demo-openshift-origin]"
+    - "recipe[mu-demo-openshift-origin::master]"
+  server_pools: 
+  - name: workers
+    ssh_user: ec2-user
+    platform: rhel7
+    vpc:
+      vpc_name: vpc
+    min_size: 2
+    max_size: 2
+    run_list:
+    - "recipe[mu-tools::split_var_partitions]"
+    - "recipe[mu-demo-openshift-origin]"
+    ingress_rules:
+    - port_range: "1-65535"
+      proto: tcp
+      sgs:
+      - servermaster
+    - port_range: "1-65535"
+      proto: udp
+      sgs:
+      - servermaster
+    vault_access:
+    - vault: openshift-origin-ssh
+      item: private
+    - vault: openshift-origin-ssh
+      item: public
+    basis:
+      launch_config:
+        name: workers
+        ami_id: ami-a8d369c0
+        size: t2.large
+        storage:
+        - device: /dev/xvdg
+          size: 20
