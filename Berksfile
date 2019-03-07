@@ -1,13 +1,9 @@
 # Default Chef Supermarket
 source "https://supermarket.chef.io"
 # Use Chef Server if you can
-if File.file?('/etc/chef/client.pem')
-	source :chef_server
-end
+source :chef_server if File.file?('/etc/chef/client.pem')
 # this repo as a cookbook source
 source chef_repo: "cookbooks/"
-
-metadata
 
 # Platform Cookbooks
 cookbook 'mu-demo-gitlab'
