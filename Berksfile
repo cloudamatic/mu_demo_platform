@@ -1,11 +1,11 @@
+# Default Chef Supermarket
 source "https://supermarket.chef.io"
-source chef_repo: "cookbooks/"
-begin
-source :chef_server
-rescue
-	pp "No chef server to use as cookbook source"
+# Use Chef Server if you can
+if File.file?('/etc/chef/client.pem')
+	source :chef_server
 end
-
+# this repo as a cookbook source
+source chef_repo: "cookbooks/"
 
 metadata
 
