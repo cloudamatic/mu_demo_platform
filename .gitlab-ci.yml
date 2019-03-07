@@ -50,7 +50,7 @@ ChefSpec:
     - chef gem install docker-api --version '= 1.34.0'
     - for d in ./cookbooks/*/ ; do (echo "${bold}Testing $d$\n{normal}" && cd "$d" && chef exec rspec --force-color -fd); done
 
-BoK Dry Run:
+.BoK Dry Run:
   stage: Smoke Test
   script:
     - for bok in applications/*.y*l ; do (echo "${bold}Testing $bok$\n{normal}" && mu-deploy -d $bok); done
