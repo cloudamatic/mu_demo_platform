@@ -1,6 +1,11 @@
 source "https://supermarket.chef.io"
-source :chef_server
 source chef_repo: "cookbooks/"
+begin
+source :chef_server
+rescue
+	pp "No chef server to use as cookbook source"
+end
+
 
 metadata
 
