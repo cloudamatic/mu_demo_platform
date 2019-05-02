@@ -20,7 +20,7 @@
   - name: master
     ssh_user: ec2-user
     platform: rhel7
-    ami_id: ami-a8d369c0
+    ami_id: ami-0f01114d1108d3d26
     size: t2.large
     vpc:
       vpc_name: vpc
@@ -72,7 +72,7 @@
     basis:
       launch_config:
         name: workers
-        ami_id: ami-a8d369c0
+        ami_id: ami-0f01114d1108d3d26
         size: t2.large
         storage:
         - device: /dev/xvdg
