@@ -8,7 +8,7 @@ package 'python'
 
 path = '/test'
 
-if node['deployment'].has_key?('application_attributes') and node['deployment']['application_attributes'].has_key? 'test_repo'
+unless node['deployment']['application_attributes']['test_repo'].empty?
   repo = node['deployment']['application_attributes']['test_repo']
 end
 
@@ -16,10 +16,13 @@ execute 'install locust' do
   command 'pip install locustio'
 end
 
-directory path
+directory path do
+  action :nothing
+end
 
 git 'checkout test repo' do
   destination path
   repository repo
   not_if { repo.nil? }
+  notifies :create, "directory[#{path}]", :before
 end
