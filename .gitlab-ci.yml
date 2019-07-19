@@ -13,6 +13,7 @@ Rubocop:
 Cookstyle:
   stage: Lint
   script:
+    - touch /var/opt/chefdk/.license.accepted
     - cookstyle cookbooks/
   
 Foodcritic:
