@@ -5,8 +5,8 @@ stages:
   - Test
   - Smoke Test
 
-before_script:
-  - export CHEF_LICENSE="accept"
+variables:
+  - CHEF_LICENSE:"accept"
 
 Rubocop:
   stage: Lint
