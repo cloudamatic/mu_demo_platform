@@ -5,10 +5,7 @@ stages:
   - Test
   - Smoke Test
 
-variables:
-  - 
-
-before:
+before_script:
   - export CHEF_LICENSE="accept"
 
 Rubocop:
