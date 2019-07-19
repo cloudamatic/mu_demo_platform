@@ -4,7 +4,13 @@ stages:
   - Lint
   - Test
   - Smoke Test
-  
+
+variables:
+  - 
+
+before:
+  - export CHEF_LICENSE="accept"
+
 Rubocop:
   stage: Lint
   script:
@@ -13,7 +19,6 @@ Rubocop:
 Cookstyle:
   stage: Lint
   script:
-    - touch /var/opt/chefdk/.license.accepted
     - cookstyle cookbooks/
   
 Foodcritic:
