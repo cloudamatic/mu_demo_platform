@@ -1,0 +1,37 @@
+<%
+  $region ||= MU.curRegion
+%>
+
+appname: <%= app_name %>
+region: <%= $region %>
+parameters:
+  - name: app_name
+    default: locust
+  - name: test_repo
+    required: false
+  - name: vpc
+    cloudtype: AWS::EC2::VPC::Id
+    default: <%= MU.myVPC %>
+server_pools:
+- name: test
+  dns_sync_wait: false
+  associate_public_ip: true
+  platform: ubuntu
+  vpc:
+    vpc_id: <%= vpc %>
+    subnet_pref: all_public
+  min-size: 2
+  max-size: 2
+  ingress_rules:
+  - port: 8089
+    hosts:
+    - 0.0.0.0/0
+  run_list:
+    - recipe[mu-demo-locust]
+  application_attributes:
+    test_repo: <%= test_repo %>
+  basis:
+    launch-config:
+      ami_id: ami-0cfee17793b08a293
+      name: autoscale
+      size: t2.small

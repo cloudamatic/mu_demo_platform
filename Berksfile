@@ -10,6 +10,7 @@ cookbook 'mu-demo-gitlab'
 cookbook 'mu-demo-jenkins'
 cookbook 'mu-demo-wordpress'
 cookbook 'mu-demo-elk_stack'
+cookbook 'mu-demo-locust'
 
 # Supermarket Cookbooks
 cookbook 'chef-vault', '~> 3.0.0'
