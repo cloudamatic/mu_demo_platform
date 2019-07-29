@@ -62,6 +62,6 @@ BoK Dry Run:
 
 Deploy Simple Server:
   image: egtlabs/mu
-  stagge: Deploy
+  stage: Deploy
   script:
     - mu-deploy applications/simple-server.yml
