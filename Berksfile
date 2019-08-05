@@ -12,6 +12,6 @@ cookbook 'mu-demo-wordpress'
 cookbook 'mu-demo-elk_stack'
 
 # Supermarket Cookbooks
-cookbook 'chef-vault', '~> 3.0.0'
+cookbook 'chef-vault', '~> 3.1.1'
 cookbook 'docker', '~> 4.0.1'
 cookbook 'firewall', '~> 2.6.3'

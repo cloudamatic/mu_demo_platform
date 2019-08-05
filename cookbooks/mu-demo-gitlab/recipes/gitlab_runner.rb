@@ -21,7 +21,7 @@
 # Since I want to assume docker is the default I am putting this here so that it builds docker if you just run the gitlab_runner recipe
 if node['gitlab-runner']['env']['RUNNER_EXECUTOR'] == 'docker'
 	node.override['gitlab-runner']['env']['DOCKER_IMAGE'] = 'ubuntu'
-	node.override['gitlab-runner']['env']['RUNNER_TAG_LIST'] = node['gitlab-runner']['env']['RUNNER_TAG_LIST'].concat(", docker")
+	node.override['gitlab-runner']['env']['RUNNER_TAG_LIST'] += ", docker"
 
 	package 'docker-io' do
 		action :upgrade
@@ -35,9 +35,10 @@ end
 
 runner_executable = 'gitlab-runner'
 
-case node['platform']
-when 'linux'
-	node.override['gitlab-runner']['env']['RUNNER_TAG_LIST'] = node['gitlab-runner']['env']['RUNNER_TAG_LIST'].concat(", #{node['platform']}")
+log "****************** #{node['platform']}"
+case node['platform_family']
+when 'rhel', 'amazon', 'debian'
+	node.override['gitlab-runner']['env']['RUNNER_TAG_LIST'] = node['gitlab-runner']['env']['RUNNER_TAG_LIST'] + ", #{node['platform']}"
 
 	case node['platform_family']
 	when 'rhel', 'amazon'
@@ -46,9 +47,9 @@ when 'linux'
 		script_url = 'https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh'
 	end
 
-	execute 'Configure Repositories' do
+	execute "Configure Repositories #{script_url} #{runner_executable}" do
 		command "curl -L #{script_url} | sudo bash"
-		not_if "#{runner_executable} status"
+		not_if "rpm -q gitlab-runner"
 	end
 
 	package 'gitlab-runner' do
