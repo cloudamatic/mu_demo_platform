@@ -35,7 +35,6 @@ end
 
 runner_executable = 'gitlab-runner'
 
-log "****************** #{node['platform']}"
 case node['platform_family']
 when 'rhel', 'amazon', 'debian'
 	node.override['gitlab-runner']['env']['RUNNER_TAG_LIST'] = node['gitlab-runner']['env']['RUNNER_TAG_LIST'] + ", #{node['platform']}"
@@ -101,11 +100,11 @@ end
 
 if !gitlab_token.empty? and !gitlab_server.empty?
 
-	puts "******************************************************"
-	puts node['hostname']
-	puts gitlab_server
-	# puts gitlab_token
-	puts "******************************************************"
+	log "******************************************************"
+	log node['hostname']
+	log gitlab_server
+#	log gitlab_token
+	log "******************************************************"
 	
 	# SET ENV VARIABLES TO PASS TO GITLAB AND TO THE GITLAB RUNNER
 	ENV['CI_SERVER_URL'] = gitlab_server
@@ -121,6 +120,7 @@ if !gitlab_token.empty? and !gitlab_server.empty?
 	execute 'Uninstall Runner' do
 		command "#{runner_executable} verify -n #{node['hostname']} --delete"
 		action :nothing
+    ignore_failure true
 	end
 
 	execute 'Register Runner' do
