@@ -1,0 +1,64 @@
+---
+appname: aks
+cloud: Azure
+vpcs:
+- name: vpc
+  route-tables:
+  - name: internet
+    routes:
+    - destination_network: 0.0.0.0/0
+      gateway: "#INTERNET"
+  - name: private
+    routes:
+    - gateway: "#NAT"
+  tags:
+  - key: thisisatag
+    value: withavalue
+container_clusters: 
+- name: containers
+  flavor: Kubernetes
+  instance_count: 2
+  disk_size_gb: 50
+  instance_type: Standard_DS1_v2
+  max_pods: 31
+  min_size: 3
+  max_size: 4
+  dns_prefix: "demo"
+  ingress_rules:
+  - port: 80
+  vpc:
+    vpc_name: vpc
+    subnet_pref: all_private
+  kubernetes_resources:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: internal-app
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    spec:
+      type: LoadBalancer
+      ports:
+      - port: 80
+      - port: 443
+      selector:
+        app: internal-app
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx-deployment
+    spec:
+      selector:
+        matchLabels:
+          app: nginx
+      replicas: 2
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - name: nginx
+            image: nginx:1.8
+            ports:
+            - containerPort: 443
