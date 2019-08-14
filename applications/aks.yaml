@@ -3,6 +3,9 @@ appname: aks
 cloud: Azure
 vpcs:
 - name: vpc
+#  peers:
+#  - vpc:
+#      vpc_id: <%= MU.myVPC %>
   route-tables:
   - name: internet
     routes:
@@ -10,7 +13,8 @@ vpcs:
       gateway: "#INTERNET"
   - name: private
     routes:
-    - gateway: "#NAT"
+    - destination_network: 0.0.0.0/0
+      gateway: "#NAT"
   tags:
   - key: thisisatag
     value: withavalue
@@ -33,20 +37,18 @@ container_clusters:
   - apiVersion: v1
     kind: Service
     metadata:
-      name: internal-app
-      annotations:
-        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      name: nginx
     spec:
       type: LoadBalancer
       ports:
       - port: 80
-      - port: 443
+        name: http
       selector:
-        app: internal-app
+        app: nginx
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: nginx-deployment
+      name: nginx
     spec:
       selector:
         matchLabels:
@@ -61,4 +63,4 @@ container_clusters:
           - name: nginx
             image: nginx:1.8
             ports:
-            - containerPort: 443
+            - containerPort: 80
