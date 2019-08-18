@@ -1,6 +1,13 @@
 ---
 appname: aks
 cloud: Azure
+parameters:
+- name: image
+  default: "nginx:1.8"
+  description: The name/URL of a Docker image to deploy in our sample application. Typically the name of a DockerHub container.
+- name: appname
+  default: nginx
+  description: The name to assign the Kubernetes application we'll deploy.
 vpcs:
 - name: vpc
 #  peers:
@@ -37,30 +44,30 @@ container_clusters:
   - apiVersion: v1
     kind: Service
     metadata:
-      name: nginx
+      name: <%= appname %>
     spec:
       type: LoadBalancer
       ports:
       - port: 80
         name: http
       selector:
-        app: nginx
+        app: <%= appname %>
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: nginx
+      name: <%= appname %>
     spec:
       selector:
         matchLabels:
-          app: nginx
+          app: <%= appname %>
       replicas: 2
       template:
         metadata:
           labels:
-            app: nginx
+            app: <%= appname %>
         spec:
           containers:
-          - name: nginx
+          - name: <%= appname %>
             image: nginx:1.8
             ports:
             - containerPort: 80
