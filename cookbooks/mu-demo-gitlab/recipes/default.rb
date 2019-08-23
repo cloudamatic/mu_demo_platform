@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: demo
+# Cookbook:: demo
 # Recipe:: gitlab
 #
 # Copyright:: Copyright (c) 2017 eGlobalTech, Inc., all rights reserved
