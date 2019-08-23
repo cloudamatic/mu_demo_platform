@@ -4,7 +4,10 @@ stages:
   - Lint
   - Test
   - Smoke Test
-  
+
+variables:
+  CHEF_LICENSE: "accept"
+
 Rubocop:
   stage: Lint
   script:

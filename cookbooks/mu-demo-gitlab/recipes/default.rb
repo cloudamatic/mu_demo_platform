@@ -1,6 +1,6 @@
 #
-# Cookbook:: demo
-# Recipe:: gitlab
+# Cookbook:: mu-demo-gitlab
+# Recipe:: default
 #
 # Copyright:: Copyright (c) 2017 eGlobalTech, Inc., all rights reserved
 #
