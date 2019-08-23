@@ -13,6 +13,7 @@
       name: simple
       platform: centos7
       size: <%= instance_type %>
+      associate_public_ip: true
       skipinitialupdates: true
       vpc:
         vpc_id: <%= vpc %>
