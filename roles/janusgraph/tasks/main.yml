@@ -1,0 +1,239 @@
+---
+- name: Install prerequisite packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - less
+    - mlocate
+    - vim
+    - lsof
+    - htop
+    - dstat
+    - tcpdump
+    - unzip
+    - xfsprogs
+    - ruby
+    - ruby-dev
+    - rubygems
+    - gcc
+    - make
+    - openjdk-8-jre
+    - openjdk-8-jdk-headless
+
+- name: Format swap space
+  command: /sbin/mkswap /dev/sdb -L swap
+  when: ansible_swaptotal_mb < 1
+
+- name: Add swap to fstab
+  action: lineinfile dest=/etc/fstab regexp="LABEL=swap" line="LABEL=swap none swap sw 0 0" state=present
+
+- name: Enable swap
+  command: /sbin/swapon -a
+  when: ansible_swaptotal_mb < 1
+
+- name: Ensure /data mount point exists
+  file:
+    path: /data
+    state: directory
+
+- name: check for formatted filesystem on /dev/sdc
+  shell: /bin/lsblk -f | grep ^sdc | grep xfs
+  ignore_errors: yes
+  register: fs_check
+
+- name: format /dev/sdc
+  command: mkfs.xfs -s size=4096 /dev/sdc -L /data
+  when: fs_check.rc != 0
+
+- name: mount /data
+  mount:
+    name: /data
+    src: LABEL=/data
+    fstype: xfs
+    opts: noatime
+    state: mounted
+
+#- name: add Cassandra repository
+#  copy:
+#    dest: /etc/apt/sources.list.d/cassandra.sources.list
+#    src: cassandra.sources.list
+
+- name: Bump nproc limit in sysctl.conf for Cassandra
+  action: lineinfile dest=/etc/sysctl.conf regexp="^vm.max_map_count =" line="vm.max_map_count = {{ nproc_limit }}" state=present
+  notify:
+  - "apply nproc limit"
+
+#- name: add Cassandra apt keys
+#  shell: /usr/bin/curl https://www.apache.org/dist/cassandra/KEYS | /usr/bin/apt-key add -
+
+#- name: apt-get update
+#  apt:
+#    update_cache: yes
+
+#- name: install Cassandra
+#  package:
+#    name: cassandra
+#    state: present
+
+
+- name: update /etc/security/limits.d/cassandra.conf
+  copy:
+    dest: /etc/security/limits.d/cassandra.conf
+    src: cassandra_limits.conf
+  notify:
+  - "restart cassandra"
+
+- name: download JanusGraph
+  get_url:
+    url: "{{ janussrczip }}"
+    dest: /tmp/janusgraph.zip
+
+- name: unzip JanusGraph
+  shell: test -d /usr/local/janusgraph/bin || unzip -o /tmp/janusgraph.zip -d /usr/local/
+
+- name: get JanusGraph dir name
+  shell: unzip -o /tmp/janusgraph.zip -d /tmp/ | grep "inflating:" | head -1 | awk '{print $2}' | awk -F / '{print "/usr/local/"$3}'
+  register: janusroot
+
+- name: Symlink to JanusGraph installation
+  file:
+    src: "{{ janusroot.stdout }}"
+    dest: /usr/local/janusgraph
+    state: link
+  become: yes
+
+- name: add Janus executables to PATH
+  copy:
+    dest: /etc/profile.d/janus-path.sh
+    src: janus-path.sh
+
+- name: Create a user for Janus daemons
+  user:
+    name: janus
+    comment: JanusGraph Gremlin Server ElasticSearch
+    uid: 499
+    shell: /bin/bash
+
+- name: Ensure various janus-owned directories exist
+  file:
+    path: "{{ item }}"
+    owner: janus
+    group: janus
+    state: directory
+  with_items:
+  - /var/run/elasticsearch
+  - /var/run/gremlin
+  - /var/log/elasticsearch
+  - /var/log/gremlin
+  - /data/es
+  - /data/cassandra
+  - /var/run/cassandra
+  - /var/log/cassandra
+
+- name: ditch default JanusGraph log directory
+  shell: "test -d {{ janusroot.stdout }}/log && rm -rf {{ janusroot.stdout }}/log"
+
+- name: Symlink JanusGraph log directory to somewhere useful
+  file:
+    src: /var/log/cassandra
+    dest: "{{ janusroot.stdout }}/log"
+    state: link
+  become: yes
+  notify:
+  - "update systemd"
+  - "restart cassandra"
+
+- name: set Janus' Elasticsearch config file
+  copy:
+    dest: /usr/local/janusgraph/elasticsearch/config/elasticsearch.yml
+    mode: 0644
+    src: elasticsearch.yml
+  notify:
+  - "update systemd"
+  - "restart elasticsearch"
+
+- name: update cassandra.yaml
+  copy:
+    dest: /usr/local/janusgraph/conf/cassandra
+    src: cassandra.yaml
+  notify:
+  - "update systemd"
+  - "restart cassandra"
+
+- name: create init script for Janus' Elasticsearch
+  copy:
+    dest: /etc/init.d/elasticsearch
+    mode: 0755
+    src: elasticsearch-init.sh
+  notify:
+  - "update systemd"
+  - "restart elasticsearch"
+
+- name: create init script for Janus' Cassandra
+  copy:
+    dest: /etc/init.d/cassandra
+    mode: 0755
+    src: cassandra-init.sh
+  notify:
+  - "update systemd"
+  - "restart cassandra"
+
+- name: replace Gremin's server config
+  copy:
+    dest: /usr/local/janusgraph/conf/gremlin-server/gremlin-server.yaml
+    mode: 0644
+    src: gremlin-server.yaml
+  notify:
+  - "restart gremlin"
+
+- name: create init script for Janus' Gremlin server
+  copy:
+    dest: /etc/init.d/gremlin
+    mode: 0755
+    src: gremlin-init.sh
+  notify:
+  - "update systemd"
+  - "restart gremlin"
+
+- name: update systemd
+  command: systemctl daemon-reload
+
+- name: install gremlin_client gem
+  gem:
+    name: gremlin_client
+    state: present
+
+- name: Start Elasticsearch
+  ignore_errors: yes
+  service:
+    name: elasticsearch
+    state: started
+
+- name: Start Cassandra
+  service:
+    name: cassandra
+    state: started
+
+- name: Start Gremlin
+  ignore_errors: yes
+  service:
+    name: gremlin
+    state: started
+
+- name: install heartbeat script
+  copy:
+    dest: /root/gremlin-heartbeat.rb
+    mode: 0755
+    src: gremlin-heartbeat.rb
+
+- name: make sure Gremlin isn't in a bad state
+  command: /root/gremlin-heartbeat.rb
+  ignore_errors: yes
+  register: result
+
+- name: trigger Gremlin restart if heartbeat failed
+  shell: "echo noop > /dev/null"
+  when: result is failed
+  notify:
+  - "restart gremlin"

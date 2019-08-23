@@ -1,0 +1,19 @@
+- name: update systemd
+  command: systemctl daemon-reload
+  listen: "update systemd"
+
+- name: apply nproc limit
+  command: sysctl -w vm.max_map_count={{ nproc_limit }}
+  listen: "apply nproc limit"
+
+- name: restart elasticsearch
+  service: name=elasticsearch state=restarted
+  listen: "restart elasticsearch"
+
+- name: restart gremlin
+  service: name=gremlin state=restarted
+  listen: "restart gremlin"
+
+- name: restart cassandra
+  service: name=cassandra state=restarted
+  listen: "restart cassandra"

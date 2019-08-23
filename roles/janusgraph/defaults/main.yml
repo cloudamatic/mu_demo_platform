@@ -1,0 +1,4 @@
+---
+# defaults file for janusgraph
+janussrczip: https://github.com/JanusGraph/janusgraph/releases/download/v0.4.0/janusgraph-0.4.0-hadoop2.zip
+nproc_limit: 1048575
