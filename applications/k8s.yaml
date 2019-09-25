@@ -10,7 +10,7 @@ parameters:
 vpcs:
 <% MU::Cloud.availableClouds.each { |cloud| %>
 - name: <%= cloud.downcase %>vpc
-  ip_block: 10.102.0.0/16
+  ip_block: 10.<%= Random.rand(254) %>.0.0/16
   cloud: <%= cloud %>
 <% if cloud == MU.myCloud %>
   peers:
