@@ -3,7 +3,7 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'chef-vault', '~> 3.0.0'
+cookbook 'chef-vault', '~> 3.1.1'
 cookbook 'docker', '~> 4.0.1'
 cookbook 'firewall', '~> 2.6.3'
 cookbook 'omnibus-gitlab', '~> 0.4.2', git: 'http://ec2-34-200-91-90.compute-1.amazonaws.com/ryan.bolyard/cookbook-omnibus-gitlab.git'

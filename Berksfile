@@ -13,6 +13,6 @@ cookbook 'mu-demo-elk_stack'
 cookbook 'mu-demo-locust'
 
 # Supermarket Cookbooks
-cookbook 'chef-vault', '~> 3.0.0'
+cookbook 'chef-vault', '~> 3.1.1'
 cookbook 'docker', '~> 4.0.1'
 cookbook 'firewall', '~> 2.6.3'
