@@ -1,0 +1,16 @@
+---
+appname: janusgraph
+cloud: Google
+servers:
+- name: dbstore
+  groomer: Ansible
+  associate_public_ip: true
+  platform: debian9
+  size: n1-standard-2
+  run_list:
+  - janusgraph
+  storage:
+  - size: 64 # swap
+    device: /dev/sdb
+  - size: 512 # /data
+    device: /dev/sdc
