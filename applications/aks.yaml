@@ -1,0 +1,73 @@
+---
+appname: aks
+cloud: Azure
+parameters:
+- name: image
+  default: "nginx:1.8"
+  description: The name/URL of a Docker image to deploy in our sample application. Typically the name of a DockerHub container.
+- name: appname
+  default: nginx
+  description: The name to assign the Kubernetes application we'll deploy.
+vpcs:
+- name: vpc
+#  peers:
+#  - vpc:
+#      vpc_id: <%= MU.myVPC %>
+  route-tables:
+  - name: internet
+    routes:
+    - destination_network: 0.0.0.0/0
+      gateway: "#INTERNET"
+  - name: private
+    routes:
+    - destination_network: 0.0.0.0/0
+      gateway: "#NAT"
+  tags:
+  - key: thisisatag
+    value: withavalue
+container_clusters: 
+- name: containers
+  flavor: Kubernetes
+  instance_count: 2
+  disk_size_gb: 50
+  instance_type: Standard_DS1_v2
+  max_pods: 31
+  min_size: 3
+  max_size: 4
+  dns_prefix: "demo"
+  ingress_rules:
+  - port: 80
+  vpc:
+    vpc_name: vpc
+    subnet_pref: all_private
+  kubernetes_resources:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: <%= appname %>
+    spec:
+      type: LoadBalancer
+      ports:
+      - port: 80
+        name: http
+      selector:
+        app: <%= appname %>
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: <%= appname %>
+    spec:
+      selector:
+        matchLabels:
+          app: <%= appname %>
+      replicas: 2
+      template:
+        metadata:
+          labels:
+            app: <%= appname %>
+        spec:
+          containers:
+          - name: <%= appname %>
+            image: nginx:1.8
+            ports:
+            - containerPort: 80
